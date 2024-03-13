@@ -80,6 +80,7 @@ input[type="text"] {
   flex-direction: row;
   align-items: center;
   position: relative;
+  gap: 10px;
 }
 .header .center-header .service .upload button {
   width: 120px;
@@ -95,9 +96,35 @@ input[type="text"] {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.header .center-header .service .login button:hover {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
+    rgb(254, 44, 85);
+}
+.header .center-header .service .login button {
+  padding: 0 10px 0 10px;
+}
+
+.header .center-header .service .login button {
+  width: 120px;
+  height: 38px;
+  border: none;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: #fe2c55;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .header .center-header .service .upload button i {
   padding: 0 20px 0 0;
 }
+
 .header .center-header .service .lotify,
 .message {
   font-size: 23px;
@@ -1906,4 +1933,59 @@ content {
   vertical-align: middle;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-container {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.birthday-picker select {
+  width: 100px;
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.birthday-picker select:last-child {
+  margin-right: 0;
+}
+
+.birthday-picker select option[disabled] {
+  display: none;
 }
