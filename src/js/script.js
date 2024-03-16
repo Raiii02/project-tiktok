@@ -131,7 +131,7 @@ function updateDays() {
   if (selectedMonth === "02") {
     daysInMonth =
       selectedYear % 4 === 0 &&
-      (selectedYear % 100 !== 0 || selectedYear % 400 === 0)
+        (selectedYear % 100 !== 0 || selectedYear % 400 === 0)
         ? 29
         : 28;
   } else if (["04", "06", "09", "11"].includes(selectedMonth)) {

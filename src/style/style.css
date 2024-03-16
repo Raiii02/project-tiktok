@@ -137,7 +137,6 @@ input[type="text"] {
   position: relative;
   width: 32px;
   height: 32px;
-  background-size: cover;
   cursor: pointer;
 }
 .header .center-header .avatar img {
@@ -1422,7 +1421,7 @@ content {
   align-items: flex-start;
   padding: 20px 0px;
   position: relative;
-  max-width: 692px;
+  max-width: 450px;
   height: unset;
   width: unset;
   transition-property: margin;
@@ -1938,7 +1937,7 @@ content {
 .modal-container {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 1001;
   left: 0;
   top: 0;
   width: 100%;
@@ -1951,20 +1950,37 @@ content {
 .modal-content {
   justify-content: center;
   align-items: center;
-  text-align: center;
   background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
+  margin: 10% auto;
+  height: 532px;
   border: 1px solid #888;
-  width: 30%;
+  width: 26%;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
 }
-
+.container-login {
+  margin: 22px auto auto;
+  padding: unset;
+}
 .close {
   color: #aaaaaa;
-  float: right;
+  border-radius: 50%;
   font-size: 28px;
+  display: flex;
   font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  float: right; /* Menggunakan float untuk menempatkan tombol close di kanan atas */
+  width: 24px;
+  height: 24px;
+  padding: 5px;
+  background: rgba(22, 24, 35, 0.03);
+  margin-right: 10px; /* Memberikan jarak dari tepi kanan */
+  margin-top: 10px; /* Memberikan jarak dari tepi atas */
+  z-index: 1;
 }
+
 
 .close:hover,
 .close:focus {
@@ -1972,9 +1988,13 @@ content {
   text-decoration: none;
   cursor: pointer;
 }
-
+.birthday-picker {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
 .birthday-picker select {
-  width: 100px;
+  width: 110px;
   padding: 8px;
   margin-right: 10px;
   border-radius: 5px;
@@ -1988,4 +2008,340 @@ content {
 
 .birthday-picker select option[disabled] {
   display: none;
+}
+
+#logIn-form,
+#signUp-form {
+  width: 363px;
+  margin: 64px auto auto;
+  padding: unset;
+  margin-top: 20px;
+}
+.fomr-login {
+  padding: 20px;
+}
+.syarat-ketentuan {
+  display: flex;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  padding: 16px 30px;
+  margin-bottom: unset;
+  margin-bottom: 50px;
+}
+.syarat-ketentuan p {
+  color: rgba(17, 19, 27, 0.5);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 15px;
+  width: 337px;
+  text-align: center;
+}
+.syarat-ketentuan p span {
+  color: rgba(22, 24, 35, 0.75);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+h2 {
+  color: rgb(22, 24, 35);
+  font-size: 30px;
+  margin-bottom: 29px;
+  font-weight: bold;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.form-group strong {
+  font-size: 13px;
+  font-weight: 500;
+}
+.form-group i {
+  position: absolute;
+  right: 522px;
+  top: 343px;
+}
+#icon-password {
+  position: absolute;
+  right: 549px;
+  top: 385px;
+}
+#icon-Cpassword {
+  position: absolute;
+  right: 549px;
+  top: 440px;
+}
+
+#logIn-form .form-group #username_email,
+#logIn-form .form-group #password {
+  border-radius: 2px;
+  background-color: rgba(22, 24, 35, 0.06);
+  border: 1px solid rgba(22, 24, 35, 0.12);
+  padding-inline-start: 12px;
+  color: rgb(22, 24, 35);
+  line-height: 100%;
+  outline: none;
+  font-size: 16px;
+  height: 44px;
+  caret-color: rgb(254, 44, 85);
+  width: 100%;
+  padding-inline-end: unset;
+  position: relative;
+  margin-bottom: 9px;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  border-radius: 2px;
+  background-color: rgba(22, 24, 35, 0.06);
+  border: 1px solid rgba(22, 24, 35, 0.12);
+  padding-inline-start: 12px;
+  color: rgb(22, 24, 35);
+  line-height: 100%;
+  outline: none;
+  font-size: 16px;
+  height: 44px;
+  caret-color: rgb(254, 44, 85);
+  width: 93%;
+  padding-inline-end: unset;
+  position: relative;
+  margin-bottom: 9px;
+}
+
+.container-link {
+  width: 100%;
+  color: rgb(22, 24, 35);
+  font-family: TikTokFont;
+  padding-bottom: 18px;
+  border-top: 1px solid rgb(169, 175, 169);
+  display: flex;
+  justify-content: center;
+  bottom: 0px;
+  -webkit-box-align: center;
+  align-items: center;
+  font-size: 15px;
+  line-height: 18px;
+}
+.toggle-password {
+  position: relative;
+  cursor: pointer;
+  color: #999;
+}
+
+.toggle-password:hover {
+  color: #333;
+}
+
+.password {
+  text-align: left;
+  margin-bottom: 15px;
+}
+.password a {
+  text-decoration: none;
+  color: black;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btnLogin,
+.btnSignup {
+  border-radius: 4px;
+  border: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(254, 44, 85);
+  min-width: 120px;
+  min-height: 46px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  font-family: TikTokFont, PingFangSC, sans-serif;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 6px 8px;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.bottom-text {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.bottom-text a {
+  color: rgb(254, 44, 85);
+  text-decoration: none;
+}
+
+.bottom-text a:hover {
+  text-decoration: underline;
+}
+.center-content-jelajahi {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.content-jelajahi {
+  width: 100%;
+}
+
+.wrapper {
+  padding: 18px;
+  position: relative;
+  overflow-x: hidden;
+  background: #fff;
+  border-radius: 13px;
+}
+
+.wrapper .icon {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.icon:first-child {
+  left: 0;
+  display: none;
+  background: linear-gradient(90deg, #fff 70%, transparent);
+}
+
+.icon:last-child {
+  right: 0;
+  justify-content: flex-end;
+  background: linear-gradient(-90deg, #fff 70%, transparent);
+}
+
+.icon i {
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  text-align: center;
+  line-height: 55px;
+  border-radius: 50%;
+}
+
+.icon i:hover {
+  background: #efedfb;
+}
+
+.icon:first-child i {
+  margin-left: 15px;
+}
+
+.icon:last-child i {
+  margin-right: 15px;
+}
+
+.wrapper .tabs-box {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.tabs-box.dragging {
+  scroll-behavior: auto;
+  cursor: grab;
+}
+
+.tabs-box .tab {
+  cursor: pointer;
+  font-size: 1rem;
+  white-space: nowrap;
+  background: #f5f4fd;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #d8d5f2;
+}
+
+.tabs-box .tab:hover {
+  background: #efedfb;
+}
+
+.tabs-box.dragging .tab {
+  user-select: none;
+  pointer-events: none;
+}
+
+.tabs-box .tab.active {
+  color: #fff;
+  background: black;
+  border-color: transparent;
+}
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.grid-container .jalajah-card {
+  margin: 10px;
+  width: calc(100% / 5 - 32px);
+  padding: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: normal;
+  position: relative;
+}
+
+.jalajah-video-tiktok {
+  position: relative;
+  width: 100%;
+  position: relative;
+  width: 100%;
+  padding-bottom: 177.78%; /* Perbandingan aspek video 9:16 */
+  overflow: hidden;
+}
+.jalajah-video-tiktok video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: block;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-description {
+  padding: 10px;
+}
+
+.jelajahi-count {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: absolute;
+  bottom: 45px;
+  gap: 10px;
+}
+
+.jelajahi-count strong,
+.jelajahi-count i {
+  color: #fff;
+}
+.content-video {
+  margin: 0 auto;
 }

@@ -29,18 +29,38 @@ if (isset($_SESSION['username'])) {
 
     <div id="modal-container" class="modal-container">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <form id="logIn-form" method="post" action="logIn.php">
-          <h2>Log In</h2>
-          <input type="text" name="username_email" placeholder="Email or Username" required>
-          <input type="password" name="password" placeholder="Password" required>
-          <i class="fas fa-eye toggle-password"></i>
-          <span class="password"><a href="#">Forgot password?</a></span>
-          <button class="btnLogin" type="submit" name="submit">Log in</button>
-          <div class="bottom-text">
-            <span>Don’t have an account? <p id="signUp-btn">Sign up</p></span>
+        <div class="container-login">
+          <div class="form-login">
+            <span class="close">&times;</span>
+            <form id="logIn-form" method="post" action="logIn.php">
+              <h2>Log In</h2>
+              <div class="form-group">
+                <strong>Email atau nama pengguna</strong>
+                <input type="text" name="username_email" id="username_email" placeholder="Email or Username" required>
+              </div>
+              <div class="form-group">
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <i class="fas fa-eye toggle-password"></i>
+              </div>
+              <div class="password">
+                <a href="#">Lupa password?</a>
+              </div>
+              <button class="btnLogin" type="submit" name="submit">Log in</button>
+              <div class="syarat-ketentuan">
+                <p>
+                  Dengan menggunakan akun yang berlokasi di <span>Indonesia</span>, Anda menyetujui <span>Ketentuan Penggunaan</span> kami 
+                  dan menyatakan bahwa Anda telah membaca <span>Kebijakan Privasi</span> kami.
+                </p>
+              </div>
+              <div class="container-link">
+                <hr>~
+                <div class="bottom-text">
+                  <span>Belum punya akun? <a href="#" id="signUp-btn">Daftar</a></span>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
 
         <form id="signUp-form" method="post" action="signUp.php">
           <h2>Sign Up</h2>
@@ -70,20 +90,24 @@ if (isset($_SESSION['username'])) {
             </select>
             <div id="birthday-error" style="display: none; color: red;">Anda harus berusia minimal 18 tahun untuk mendaftar.</div><br>
           </div>
-          <input type="email" name="email" placeholder="Email" required>
-          <input type="text" name="username" placeholder="Username" required>
-          <input type="password" id="password" name="password" placeholder="Password" required>
-          <i class="fas fa-eye toggle-password"></i>
-          <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
-          <i class="fas fa-eye toggle-password"></i>
-          <br>
-          <div id="password-error" style="display: none; color: red;">Konfirmasi password tidak cocok!</div><br>
-          <button type="submit" name="submit">Sign Up</button>
-          <div class="bottom-text">
-            <span>Already have an account?
-              <p id="logIn-btn">Log In</p>
-            </span>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <i class="fas fa-eye toggle-password" id="icon-password"></i>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+            <i class="fas fa-eye toggle-password" id="icon-Cpassword"></i>
           </div>
+          <div id="password-error" style="display: none; color: red;">Konfirmasi password tidak cocok!</div><br>
+          <button type="submit" name="submit" class="btnSignup">Sign Up</button>
+          
+            <div class="container-link">
+              <div class="bottom-text">
+                <span>Sudah Punya Akun?
+                  <a id="logIn-btn">Log In</a>
+                </span>
+              </div>
+            </div>
         </form>
       </div>
     </div>
