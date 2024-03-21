@@ -55,14 +55,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -70,14 +71,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -85,14 +87,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -100,14 +103,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -115,14 +119,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -130,14 +135,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -145,14 +151,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -160,14 +167,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -175,14 +183,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                   <div class="jalajah-card">
                     <div class="video-tiktok">
@@ -190,14 +199,15 @@
                         <source src="src/assets/video/video1.mp4" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                       </video>
+                      <div class="jelajahi-count">
+                      <i class="fa-solid fa-play"></i>
+                      <strong>1.74M</strong>
+                    </div>
                     </div>
                     <div class="jelajahi-description">
                       <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
                     </div>
-                    <div class="jelajahi-count">
-                      <i class="fa-solid fa-play"></i>
-                      <strong>1.74M</strong>
-                    </div>
+                    
                   </div>
                 </div>
             </div>
@@ -206,5 +216,6 @@
       </div>
     </content>
     <script src="src/js/script.js"></script>
+    <script src="src/js/js.js"></script>
   </body>
 </html>
