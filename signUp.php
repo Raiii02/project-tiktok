@@ -5,40 +5,40 @@ session_start();
 
 // Mendapatkan nilai dari form
 $email = $_POST['email'];
-$username = $_POST['username'];
+$name = $_POST['name'];
+$random_number = rand(1000, 9999);
+$username = 'user' . $random_number;
 $password = $_POST['password'];
+
+//default profile picture
+$profile_picture = 'uploads/profile_picture/profile_default.jpg';
+
 $day = $_POST['day'];
 $month = $_POST['month'];
 $year = $_POST['year'];
 
 // Format tanggal sesuai dengan yang diinginkan untuk disimpan di database
-$birthday = "$year-$month-$day";
-
-// Periksa apakah username sudah ada
-$sql = "SELECT * FROM users WHERE username='$username'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "Username sudah digunakan.";
-    exit; // Hentikan eksekusi skrip karena username sudah ada
-}
+$birthday = "$year-$day-$month";
 
 // Periksa apakah email sudah ada
 $sql = "SELECT * FROM users WHERE email='$email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "Email sudah terdaftar.";
+    $_SESSION['email_exists'] = "Email sudah digunakan!";
+    header("Location: index.php");
     exit; // Hentikan eksekusi skrip karena email sudah ada
 }
 
 // Siapkan dan jalankan query SQL untuk menyimpan data
-$sql = "INSERT INTO users (email, username, password, birthday) VALUES ('$email', '$username', '$password', '$birthday')";
+$sql = "INSERT INTO users (email, name, username, profile_picture, password, birthday) VALUES ('$email', '$name', '$username', '$profile_picture' ,'$password', '$birthday')";
 
 if ($conn->query($sql) === TRUE) {
-    $_SESSION['username'] = $username;
+    // Atur sesi untuk nama pengguna yang baru didaftarkan
+    $_SESSION['user_id'] = $row['id'];
+    // Redirect pengguna ke halaman setelah registrasi
     header("Location: index.php");
-    exit();
+    exit(); // Hentikan eksekusi skrip setelah redirect
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

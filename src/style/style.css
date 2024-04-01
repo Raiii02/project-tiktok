@@ -1590,6 +1590,7 @@ content {
   background-color: rgba(206, 205, 205, 0.389);
   cursor: pointer;
 }
+
 .center-content-right
   .content-right
   .content-playlist
@@ -2087,15 +2088,15 @@ h2 {
   right: 1%;
   top: 37%;
 }
-#icon-password {
-  position: absolute;
-  right: 7%;
-  top: 56%;
-}
-#icon-Cpassword {
+.toggle-password[data-icon="2"] {
   position: absolute;
   right: 7%;
   top: 45%;
+}
+.toggle-password[data-icon="3"] {
+  position: absolute;
+  right: 7%;
+  top: 56%;
 }
 
 #logIn-form .form-group #username_email,

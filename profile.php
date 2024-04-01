@@ -1,3 +1,32 @@
+<?php
+include './src/config/config.php';
+session_start();
+
+if (isset($_SESSION['id'])) {
+  $user_id = $_SESSION['id'];
+
+  // Query informasi pengguna
+  $userQuery = "SELECT * FROM users WHERE id = $user_id";
+  $userResult = mysqli_query($conn, $userQuery);
+
+  if ($userResult && $userResult->num_rows > 0) {
+    // Ambil data pengguna dari hasil query
+    $userData = mysqli_fetch_assoc($userResult);
+    $profile_picture = $userData['profile_picture'];
+    $username = $userData['username'];
+    $name = $userData['name'];
+
+    // Query video-video yang dimiliki oleh pengguna
+    $videoQuery = "SELECT * FROM videos JOIN users ON videos.user_id = users.id";
+    $videoResult = mysqli_query($conn, $videoQuery);
+  } else {
+    // Jika query tidak mengembalikan hasil atau tidak berhasil dieksekusi, tampilkan pesan kesalahan
+    echo "Error: Query tidak mengembalikan hasil yang valid.";
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,12 +56,12 @@
             <div class="profile">
               <div class="header-profile">
                 <div class="avatar">
-                  <img src="photo/avatar.jpg" width="30px" alt="" />
+                  <img src="<?php echo $profile_picture; ?>" width="30px" alt="" />
                 </div>
                 <div class="text-profile">
-                  <h1>qiamxlyaa_</h1>
-                  <h6>Kia⋆.ೃ࿔</h6>
-                  <button class="btn-profile"> Upload</button>
+                  <h1><?php echo $username; ?></h1>
+                  <h6><?php echo $name; ?></h6>
+                  <button class="btn-profile">Upload</button>
                 </div>
               </div>
               <div class="info-number">
@@ -74,85 +103,28 @@
 
                   <!-- Konten tab -->
                   <div id="panel-1" class="tab-content">
-                    <div class="video-container">
-                      <div class="video-card">
-                        <div class="video-tiktok">
-                          <video id="myVideo1" width="320" height="240">
-                            <source src="src/assets/video/video1.mp4" type="video/mp4">
-                            Browser Anda tidak mendukung tag video
-                          </video>
-                        </div>
-                        <div class="video-description">
-                          <p>Judul Video 1</p>
-                        </div>
-                        <div class="view-count">
-                          <i class="fa-solid fa-play"></i>
-                          <strong>1.74M</strong>
-                        </div>
+                    <?php if ($videoResult && mysqli_num_rows($videoResult) > 0) { ?>
+                      <div class="video-container">
+                        <?php while ($videoData = mysqli_fetch_assoc($videoResult)) { ?>
+                          <div class="video-card">
+                            <div class="video-tiktok">
+                              <video id="myVideo1" width="320" height="240">
+                                <source src="<?php echo $videoData['video_path']; ?>" type="video/mp4">
+                                Browser Anda tidak mendukung tag video
+                              </video>
+                            </div>
+                            <div class="video-description">
+                              <p><?php echo $videoData['title']; ?></p>
+                            </div>
+                            <div class="view-count">
+                              <i class="fa-solid fa-play"></i>
+                              <strong>1.74M</strong>
+                            </div>
+                          </div>
+                        <?php } ?>
                       </div>
-                      <div class="video-card">
-                        <div class="video-tiktok">
-                          <video id="myVideo1" width="320" height="240">
-                            <source src="src/assets/video/video1.mp4" type="video/mp4">
-                            Browser Anda tidak mendukung tag video.
-                          </video>
-                        </div>
-                        <div class="video-description">
-                          <p id="video-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                        </div>
-                        <div class="view-count">
-                          <i class="fa-solid fa-play"></i>
-                          <strong>1.74M</strong>
-                        </div>
-                      </div>
-                      <div class="video-card">
-                        <div class="video-tiktok">
-                          <video id="myVideo1" width="320" height="240">
-                            <source src="src/assets/video/video1.mp4" type="video/mp4">
-                            Browser Anda tidak mendukung tag video.
-                          </video>
-                        </div>
-                        <div class="video-description">
-                          <p id="video-description-content">quia cumque optio vel veniam, nam cupiditate error unde quaerat nostrum recusandae libero.</p>
-                        </div>
-                        <div class="view-count">
-                          <i class="fa-solid fa-play"></i>
-                          <strong>1.74M</strong>
-                        </div>
-                      </div>
-                      <div class="video-card">
-                        <div class="video-tiktok">
-                          <video id="myVideo1" width="320" height="240">
-                            <source src="src/assets/video/video1.mp4" type="video/mp4">
-                            Browser Anda tidak mendukung tag video.
-                          </video>
-                        </div>
-                        <div class="video-description">
-                          <p>Lorem, ipsum dolor sit amet consecteturCumque sint nulla quam.</p>
-                        </div>
-                        <div class="view-count">
-                          <i class="fa-solid fa-play"></i>
-                          <strong>1.74M</strong>
-                        </div>
-                      </div>
-                      <div class="video-card">
-                        <div class="video-tiktok">
-                          <video id="myVideo1" width="320" height="240">
-                            <source src="src/assets/video/video1.mp4" type="video/mp4">
-                            Browser Anda tidak mendukung tag video.
-                          </video>
-                        </div>
-                        <div class="video-description">
-                          <p id="video-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                        </div>
-                        <div class="view-count">
-                          <i class="fa-solid fa-play"></i>
-                          <strong>1.74M</strong>
-                        </div>
-                      </div>
-                    </div>
+                    <?php } ?>
                   </div>
-
                   <div id="panel-2" class="tab-content">
                     <div class="disukai-container">
                       <i class="fa-solid fa-lock"></i>
@@ -164,9 +136,7 @@
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>
