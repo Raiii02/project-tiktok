@@ -84,7 +84,7 @@ if ($isLoggedIn) {
                   </div>
                   <div class="form-group">
                     <input type="password" id="loginPassword" name="password" placeholder="Password" required>
-                    <i class="fas fa-eye toggle-password" data-icon="1"></i>
+                    <i class="fas fa-eye toggle-password" id="log-iconPass" data-icon="1"></i>
                     <div id="loginPasswordError" class="error"></div>
                   </div>
                   <div class="password">
@@ -143,10 +143,10 @@ if ($isLoggedIn) {
                   <input type="text" id="name" name="name" placeholder="Name" required>
                   <div id="nameError" class="error"></div>
                   <input type="password" id="password" name="password" placeholder="Password" required>
-                  <i class="fas fa-eye toggle-password" data-icon="2"></i>
+                  <i class="fas fa-eye toggle-password" id="icon-password" data-icon="2"></i>
                   <div id="passwordError" class="error"></div>
                   <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
-                  <i class="fas fa-eye toggle-password" data-icon="3"></i>
+                  <i class="fas fa-eye toggle-password" id="icon-Cpassword" data-icon="3"></i>
                   <div id="confirmPasswordError" class="error"></div>
                 </div>
 
@@ -176,21 +176,21 @@ if ($isLoggedIn) {
   </div>
 </div>
 
-<div id="modal-error" class="modal" style="display: <?php echo (isset($_SESSION['email_exists']) || isset($_SESSION['password_incorrect']) || isset($_SESSION['username_email_dne'])) ? 'block' : 'none'; ?>">
-  <div class="modal-content">
+<div id="modal-error" class="modal <?php echo (isset($_SESSION['email_exists']) || isset($_SESSION['password_incorrect']) || isset($_SESSION['username_email_dne'])) ? 'show' : ''; ?>">
+  <div class="modal-content-error">
     <span class="close-error">&times;</span>
     <div id="error-message">
       <?php
       if (isset($_SESSION['email_exists'])) {
-        echo $_SESSION['email_exists'];
+        echo "<i class='fas fa-exclamation-circle'></i><h1>Oppss!</h1> " . $_SESSION['email_exists'];
         unset($_SESSION['email_exists']);
       }
       if (isset($_SESSION['password_incorrect'])) {
-        echo $_SESSION['password_incorrect'];
+        echo "<i class='fas fa-exclamation-circle'></i><h1>Oppss!</h1> " . $_SESSION['password_incorrect'];
         unset($_SESSION['password_incorrect']);
       }
       if (isset($_SESSION['username_email_dne'])) {
-        echo $_SESSION['username_email_dne'];
+        echo "<i class='fas fa-exclamation-circle'></i><h1>Oppss!</h1> " . $_SESSION['username_email_dne'];
         unset($_SESSION['username_email_dne']);
       }
       ?>

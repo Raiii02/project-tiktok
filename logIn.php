@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         // Username/Email ditemukan, periksa password
-        $row = $result->fetch_assoc();
+        $row = $result->fetch_assoc(); 
         $stored_password = $row["password"];
         if ($stored_password === $_POST["password"]) {
             $_SESSION['id'] = $row['id'];
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit; // Pastikan tidak ada output lain sebelum header
             }
         } else {
-            $_SESSION['password_incorrect'] = "Password salah";
+            $_SESSION['password_incorrect'] = " Password yang Anda masukkan tidak benar. Mohon periksa kembali";
             header("Location: index.php");
             exit; // Hentikan eksekusi skrip karena email sudah ada
         }
