@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Video</title>
+    <style>
+      /* CSS Styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      input[type="file"] {
+        margin-bottom: 10px;
+      }
+
+      button {
+        padding: 8px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #videoInfoForm select,
+      #videoInfoForm input[type="text"],
+      #videoInfoForm input[type="file"] {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      #videoList {
+        list-style: none;
+        padding: 0;
+      }
+
+      #videoList li {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="uploadContainer">
+      <h2>Unggah Video</h2>
+      <input type="file" id="videoFile" accept="video/*" />
+      <button onclick="uploadVideo()">Unggah</button>
+    </div>
+
+    <div id="videoInfoForm" style="display: none">
+      <h2>Informasi Video</h2>
+      <form id="infoForm">
+        <input type="text" id="videoTitle" placeholder="Judul Video" />
+        <input
+          type="file"
+          id="thumbnailFile"
+          accept="image/*"
+          placeholder="Unggah Thumbnail"
+        />
+        <select id="visibility">
+          <option value="public">Publik</option>
+          <option value="friends">Teman</option>
+          <option value="private">Privat</option>
+        </select>
+        <button type="submit">Posting</button>
+        <button type="button" onclick="cancelUpload()">Batal</button>
+      </form>
+    </div>
+
+    <div id="uploadedVideos">
+      <h2>Video yang Telah Diunggah</h2>
+      <ul id="videoList"></ul>
+    </div>
+
+    <script>
+      // JavaScript Logic
+      function uploadVideo() {
+        // Implement logic to upload video
+        // After successful upload, display video info form and add uploaded video to the list
+        document.getElementById("uploadContainer").style.display = "none";
+        document.getElementById("videoInfoForm").style.display = "block";
+      }
+
+      function cancelUpload() {
+        // Implement logic to cancel upload and reset form
+        document.getElementById("uploadContainer").style.display = "block";
+        document.getElementById("videoInfoForm").style.display = "none";
+      }
+
+      document
+        .getElementById("infoForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          // Implement logic to submit video info form
+          // After submission, add video details to the list and reset form
+          let videoTitle = document.getElementById("videoTitle").value;
+          let thumbnailFile = document.getElementById("thumbnailFile").value;
+          let visibility = document.getElementById("visibility").value;
+          // Add video details to the list
+          let videoList = document.getElementById("videoList");
+          let listItem = document.createElement("li");
+          listItem.textContent = `${videoTitle} - ${visibility}`;
+          videoList.appendChild(listItem);
+          // Reset form
+          document.getElementById("infoForm").reset();
+          document.getElementById("uploadContainer").style.display = "block";
+          document.getElementById("videoInfoForm").style.display = "none";
+        });
+    </script>
+  </body>
+</html>
