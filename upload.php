@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (isset($_SESSION['username'])) {
+    $isLoggedIn = true;
+    $user_id = $_SESSION['id'];
+    $username = $_SESSION['username'];
+} else {
+    $isLoggedIn = false;
+    $username = "";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

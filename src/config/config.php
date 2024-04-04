@@ -1,10 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "clone-tiktok";
 
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli("localhost", "root", "", "clone-tiktok");
 
 // Periksa koneksi
 if ($conn->connect_error) {
