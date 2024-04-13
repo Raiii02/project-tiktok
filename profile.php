@@ -1,6 +1,12 @@
 <?php
 include './src/config/config.php';
-session_start();
+
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+
+$_SESSION['previous_page'] = $_SERVER['HTTP_REFERER'];
+
 
 if (isset($_SESSION['id'])) {
   $user_id = $_SESSION['id'];
@@ -15,10 +21,16 @@ if (isset($_SESSION['id'])) {
     $profile_picture = $userData['profile_picture'];
     $username = $userData['username'];
     $name = $userData['name'];
+    $bio = $userData['bio'];
 
     // Query video-video yang dimiliki oleh pengguna
-    $videoQuery = "SELECT * FROM videos JOIN users ON videos.user_id = users.id";
+    $videoQuery = "SELECT videos.id AS id, videos.video_path, videos.description FROM videos JOIN users ON videos.user_id = users.id WHERE videos.user_id = $user_id ORDER BY videos.created_at DESC";
     $videoResult = mysqli_query($conn, $videoQuery);
+
+    $rows = array();
+    while ($row = $videoResult->fetch_assoc()) {
+      $rows[] = $row;
+    }
   } else {
     // Jika query tidak mengembalikan hasil atau tidak berhasil dieksekusi, tampilkan pesan kesalahan
     echo "Error: Query tidak mengembalikan hasil yang valid.";
@@ -37,7 +49,7 @@ if (isset($_SESSION['id'])) {
   <title>TikTok</title>
   <link rel="stylesheet" href="src/style/style.css" />
   <link rel="stylesheet" href="style/css/responsive.css" />
-  <link rel="icon" type="image/png" href="photo/icontiktok.jpg" />
+  <link rel="icon" type="image/png" href="src/assets/photo/icontiktok.jpg" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -46,6 +58,7 @@ if (isset($_SESSION['id'])) {
     <?php include 'components/navbar.php' ?>
   </header>
   <content>
+
     <div class="content">
       <div class="center-content">
         <div class="center-content-left">
@@ -61,7 +74,7 @@ if (isset($_SESSION['id'])) {
                 <div class="text-profile">
                   <h1><?php echo $username; ?></h1>
                   <h6><?php echo $name; ?></h6>
-                  <button class="btn-profile">Upload</button>
+                  <button id="editButton" class="btn-profile">Edit</button>
                 </div>
               </div>
               <div class="info-number">
@@ -79,10 +92,13 @@ if (isset($_SESSION['id'])) {
                 </div>
               </div>
               <div class="bio-profile">
-                <h2>❥Dancer
-                  Business/Sponsors: loremipsum@loremip.com
-                  Support our dance team:
-                </h2>
+                <?php
+                if (!empty($bio)) {
+                  echo "<h2>$bio</h2>";
+                } else {
+                  echo "<h2>Belum ada biodata</h2>";
+                }
+                ?>
               </div>
               <div class="button-profile">
                 <div class="button-icon">
@@ -105,16 +121,18 @@ if (isset($_SESSION['id'])) {
                   <div id="panel-1" class="tab-content">
                     <?php if ($videoResult && mysqli_num_rows($videoResult) > 0) { ?>
                       <div class="video-container">
-                        <?php while ($videoData = mysqli_fetch_assoc($videoResult)) { ?>
+                        <?php foreach ($rows as $index => $row) { ?>
                           <div class="video-card">
-                            <div class="video-tiktok">
-                              <video id="myVideo1" width="320" height="240">
-                                <source src="<?php echo $videoData['video_path']; ?>" type="video/mp4">
-                                Browser Anda tidak mendukung tag video
-                              </video>
-                            </div>
+                            <a href='detail-vid.php?video_id=<?php echo $row['id']; ?>&prev_video_id=<?php echo ($index > 0) ? $rows[$index - 1]['id'] : null; ?>&next_video_id=<?php echo ($index < count($rows) - 1) ? $rows[$index + 1]['id'] : null; ?>&randomVideoIds=<?php echo urlencode(json_encode(array_column($rows, 'id'))); ?>'>
+                              <div class="video-tiktok">
+                                <video id="video" class="video" width="320" height="240">
+                                  <source src="<?php echo $row['video_path']; ?>" type="video/mp4">
+                                  Browser Anda tidak mendukung tag video
+                                </video>
+                              </div>
+                            </a>
                             <div class="video-description">
-                              <p><?php echo $videoData['title']; ?></p>
+                              <p><?php echo $row['description']; ?></p>
                             </div>
                             <div class="view-count">
                               <i class="fa-solid fa-play"></i>
@@ -131,7 +149,6 @@ if (isset($_SESSION['id'])) {
                       <h1>Video yang disukai pengguna ini bersifat privat</h1>
                       <p>
                         Video yang disukai oleh demivangent saat ini tersembunyi</p>
-
                     </div>
                   </div>
                 </div>
@@ -140,10 +157,58 @@ if (isset($_SESSION['id'])) {
           </div>
         </div>
       </div>
-    </div>
+
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Update Profile</h2>
+          <form id="updateProfileForm" action="update_profile.php" method="post" enctype="multipart/form-data">
+            <label>Username:</label>
+            <input type="text" id="username" name="username" required>
+            <div id="username_error" class="error"></div>
+            <label>Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label>Bio:</label>
+            <textarea id="bio" name="bio"></textarea>
+            <label>Profile Picture:</label>
+            <input type="file" id="profile_picture" name="profile_picture">
+            <img id="profileImage" src="" alt="Profile Picture" width="100">
+            <button type="submit">Update</button>
+            <button id="close" name="cancel">Batal</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="modal-success" class="modal <?php echo (isset($_SESSION['profile_update_success'])) ? 'show' : ''; ?>">
+        <div class="modal-content-success">
+          <span class="close-success">&times;</span>
+          <div id="success-message">
+            <?php
+            if (isset($_SESSION['profile_update_success'])) {
+              echo "<i class='fas fa-check-circle'></i><h1>Success!</h1> " . $_SESSION['profile_update_success'];
+              unset($_SESSION['profile_update_success']);
+            }
+            ?>
+          </div>
+        </div>
+      </div>
+
     </div>
   </content>
-  <script src="src/js/script.js"></script>
+  <script src="src/js/profile.js"></script>
+  <script src="src/js/login.js"></script>
+  <?php if (!empty($success_message)) : ?>
+    <script>
+      window.addEventListener('load', (event) => {
+        var successModal = document.getElementById("successModal");
+        successModal.style.display = "block";
+
+        setTimeout(function() {
+          successModal.style.display = "none";
+        }, 3000);
+      });
+    </script>
+  <?php endif; ?>
 </body>
 
 </html>

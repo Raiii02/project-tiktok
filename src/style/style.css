@@ -164,7 +164,7 @@ content {
   z-index: 1000;
 }
 .content .center-content {
-  margin-top: 60px;
+  /* margin-top: 60px; */
   display: flex;
   width: 100%;
   -webkit-box-pack: justify;
@@ -222,22 +222,25 @@ content {
   .center-content-left
   .content-left
   .content-left-top
-  .foryou {
+  .foryou
+  .side-link {
   display: flex;
   align-items: center;
-  width: calc(100%-15px);
+  width: calc(100% - 15px);
   height: 20px;
   padding: 15px 0px 15px 15px;
 }
+
 .content
   .center-content
   .center-content-left
   .content-left
   .content-left-top
   .foryou
+  .side-link
   span {
   padding: 5px 0px 0px 10px;
-  color: #fe2c55;
+  color: rgba(22, 24, 35, 1);
   font-weight: 600;
   font-family: ProximaNova, Arial, Tahoma, PingFangSC, sans-serif;
   font-size: 16px;
@@ -251,10 +254,11 @@ content {
   .subcriptions {
   display: flex;
   align-items: center;
-  width: calc(100%-15px);
+  width: calc(100% - 15px);
   height: 20px;
   padding: 15px 0px 15px 15px;
 }
+
 .content
   .center-content
   .center-content-left
@@ -268,6 +272,7 @@ content {
   font-family: ProximaNova, Arial, Tahoma, PingFangSC, sans-serif;
   font-size: 16px;
 }
+
 .borderbottom {
   height: 2px;
   border-radius: 10px;
@@ -281,10 +286,11 @@ content {
   .center-content-left
   .content-left
   .content-left-top
-  .live {
+  .live
+  .side-link {
   display: flex;
   align-items: center;
-  width: calc(100%-15px);
+  width: calc(100% - 15px);
   height: 20px;
   padding: 15px 0px 15px 15px;
 }
@@ -294,13 +300,15 @@ content {
   .content-left
   .content-left-top
   .live
+  .side-link
   span {
-  padding: 3px 0px 0px 10px;
+  padding: 5px 0px 0px 10px;
   color: #000;
   font-weight: 600;
   font-family: ProximaNova, Arial, Tahoma, PingFangSC, sans-serif;
   font-size: 16px;
 }
+
 .content
   .center-content
   .center-content-left
@@ -1405,6 +1413,7 @@ content {
 .center-content-right {
   position: relative;
   margin: 0px auto;
+  margin-top: 70px;
   width: 100%;
   min-width: 420px;
   flex-shrink: 1;
@@ -1524,6 +1533,11 @@ content {
   img {
   padding: 6px 10px 0px 3px;
 }
+
+.nickname {
+  padding-left: 8px;
+}
+
 .center-content-right
   .content-right
   .content-playlist
@@ -1629,7 +1643,7 @@ content {
   padding-bottom: 15px;
   display: block;
 }
-.center-content-right
+/* .center-content-right
   .content-right
   .content-playlist
   .playlist-video
@@ -1653,7 +1667,7 @@ content {
   .interactive
   .share:hover {
   background-color: rgb(212, 212, 212);
-}
+} */
 
 .profile {
   max-width: 441px;
@@ -1711,9 +1725,11 @@ content {
   position: relative;
   width: 100%;
   margin: 0 20px;
+  margin-top: 50px;
 }
 .content-profile {
   max-width: 100%;
+  margin-top: 20px;
   padding: 20px;
   min-height: 140px;
   display: flex;
@@ -1818,10 +1834,9 @@ content {
 }
 
 .tab.active {
-  border-bottom: 3px solid black; /* Warna border bottom aktif */
+  border-bottom: 3px solid black;
 }
 
-/* Style untuk konten tab */
 .tab-content {
   display: none;
   padding: 20px;
@@ -1831,16 +1846,14 @@ content {
 .tab-content.active {
   display: block;
 }
+
 .video-container {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(170px, 1fr)
-  ); /* Menyesuaikan jumlah kolom sesuai ukuran layar */
-  gap: 20px; /* Jarak antar elemen */
+  width: 1520px;
+  grid-template-columns: repeat(6, minmax(250px, 1fr));
+  gap: 20px;
 }
 
-/* Atur ukuran video agar responsif */
 .video-card {
   position: relative;
 }
@@ -1848,8 +1861,8 @@ content {
 .video-tiktok {
   position: relative;
   width: 100%;
-  padding-bottom: 177.78%; /* Perbandingan aspek video 9:16 */
-  overflow: hidden; /* Mengatur kontainer video untuk mengatasi overflow */
+  padding-bottom: calc(16 / 9 * 100%);
+  overflow: hidden;
 }
 
 .video-tiktok video {
@@ -1858,28 +1871,28 @@ content {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Mengisi ruang video tanpa merubah proporsi aslinya */
-  pointer-events: none; /* Untuk mengabaikan event mouse pada video */
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .video-description {
   box-sizing: border-box;
   color: black; /* Warna teks */
-  margin-top: 5px;
+  /* margin-top: 5px; */
   font-size: 15px;
   overflow: hidden;
   box-sizing: content-box;
 }
 
-.video-tiktok:hover::after {
+/* .video-tiktok:hover::after {
   content: "";
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   cursor: pointer; /* Mengubah kursor saat mouse mendekati */
-}
+/* } */
+
 .disukai-container {
   display: flex;
   padding: 80px;
@@ -1915,10 +1928,9 @@ content {
 }
 .view-count {
   position: absolute;
-  width: 100%;
-  bottom: 0px;
+  bottom: 4%;
   height: 60px;
-  padding: 67px 13px 17px;
+  padding: 0 13px;
 }
 .view-count i {
   margin-right: 4px;
@@ -2209,14 +2221,15 @@ input[type="email"] {
 .center-content-jelajahi {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
   overflow: hidden;
-  margin-top: 20px;
+  margin-top: 70px;
 }
 
 .content-jelajahi {
   width: 100%;
+  margin-left: 12px;
 }
 
 .wrapper {
@@ -2307,49 +2320,42 @@ input[type="email"] {
   background: black;
   border-color: transparent;
 }
+
 .grid-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(250px, 1fr));
+  gap: 20px; /* Jarak antar elemen */
+  margin-left: 29px;
+  margin-right: 20px;
 }
 
-.grid-container .jalajah-card {
-  margin: 10px;
-  width: calc(100% / 5 - 32px);
-  padding: 4px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: normal;
+.jalajahi-card {
   position: relative;
 }
 
-.jalajah-video-tiktok {
+.jelajahi-video-tiktok {
   position: relative;
   width: 100%;
-  position: relative;
-  width: 100%;
-  padding-bottom: 177.78%; /* Perbandingan aspek video 9:16 */
+  padding-bottom: calc(16 / 9 * 100%);
   overflow: hidden;
 }
-.jalajah-video-tiktok video {
+
+.jelajahi-video-tiktok video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  display: block;
   object-fit: cover;
-  pointer-events: none;
 }
 
-.video {
-  position: absolute;
+/* .video {
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
+} */
 
 .video-description {
   padding: 10px;
@@ -3225,3 +3231,70 @@ input#file-upload-button {
   display: block;
   margin: 0 auto; /* Tambahkan */
 }
+
+.like-dislike-button {
+  border: none;
+  cursor: pointer;
+}
+
+.side-link {
+  text-decoration: none;
+}
+
+.navigation {
+  position: relative;
+  left: 101.5%;
+  top: 40%;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.navigation .prevVideo a svg {
+  transform: rotate(-90deg);
+}
+
+.navigation .nextVideo a svg {
+  transform: rotate(90deg);
+}
+
+.nextVideo,
+.prevVideo {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.12);
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.nextVideo:hover,
+.prevVideo:hover {
+  background-color: rgba(37, 37, 37, 0.6);
+}
+
+/* #prevVideoBtn,
+#nextVideoBtn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#prevVideoBtn {
+  left: 20px;
+}
+
+#nextVideoBtn {
+  right: 20px;
+} */

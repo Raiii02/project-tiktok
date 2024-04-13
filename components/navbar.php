@@ -2,8 +2,11 @@
 
 include './src/config/config.php';
 
-$isLoggedIn = isset($_SESSION['id']) && !empty($_SESSION['id']);
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
+$isLoggedIn = isset($_SESSION['id']) && !empty($_SESSION['id']);
 
 if ($isLoggedIn) {
   // Lakukan query untuk mendapatkan data pengguna

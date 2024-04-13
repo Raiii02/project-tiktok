@@ -1,13 +1,23 @@
 <?php
-session_start();
+include 'src/config/config.php';
 
-// Periksa apakah pengguna sudah login
-if (isset($_SESSION['id'])) {
-  $isLoggedIn = true;
-} else {
-  $isLoggedIn = false;
-  $username = "";
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
 }
+
+$_SESSION['previous_page'] = $_SERVER['HTTP_REFERER'];
+
+// Query data dari database
+$sql = "SELECT videos.*, users.username, users.name, users.profile_picture FROM videos JOIN users ON videos.user_id = users.id";
+
+$result = $conn->query($sql);
+
+$rows = array();
+while ($row = $result->fetch_assoc()) {
+  $rows[] = $row;
+}
+
+shuffle($rows);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +27,7 @@ if (isset($_SESSION['id'])) {
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TikTok - By Tuan Xu</title>
+  <title>TikTok</title>
   <link rel="stylesheet" href="src/style/style.css" />
   <link rel="stylesheet" href="style/css/responsive.css" />
   <link rel="icon" type="image/png" href="photo/icontiktok.jpg" />
@@ -63,174 +73,34 @@ if (isset($_SESSION['id'])) {
           </div>
           <div class="container-jelajahi">
             <div class="grid-container">
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
+              <?php foreach ($rows as $index => $row) { ?>
+                <div class="jalajah-card">
+                  <div class="jelajahi-video-tiktok">
+                    <a href='detail-vid.php?video_id=<?php echo $row['id']; ?>&prev_video_id=<?php echo ($index > 0) ? $rows[$index - 1]['id'] : null; ?>&next_video_id=<?php echo ($index < count($rows) - 1) ? $rows[$index + 1]['id'] : null; ?>&randomVideoIds=<?php echo urlencode(json_encode(array_column($rows, 'id'))); ?>'>
+                      <video class="video">
+                        <source src="<?php echo $row['video_path']; ?>" type="video/mp4">
+                        Browser Anda tidak mendukung tag video.
+                      </video>
+                      <div class="jelajahi-count">
+                        <i class="fa-solid fa-play"></i>
+                        <strong>1.74M</strong>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="jelajahi-description">
+                    <p class="jelajahi-description-content"><?php echo $row['description']; ?></p>
                   </div>
                 </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
-              <div class="jalajah-card">
-                <div class="video-tiktok">
-                  <video id="myVideo1" class="video">
-                    <source src="src/assets/video/video1.mp4" type="video/mp4">
-                    Browser Anda tidak mendukung tag video.
-                  </video>
-                  <div class="jelajahi-count">
-                    <i class="fa-solid fa-play"></i>
-                    <strong>1.74M</strong>
-                  </div>
-                </div>
-                <div class="jelajahi-description">
-                  <p class="jelajahi-description-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae facilis dignissimos numqua</p>
-                </div>
-
-              </div>
+              <?php } ?>
             </div>
           </div>
         </div>
       </div>
     </div>
+    </div>
   </content>
-  <script src="src/js/script.js"></script>
-  <script src="src/js/js.js"></script>
+  <script src="src/js/jelajahi.js"></script>
+  <script src="src/js/login.js"></script>
 </body>
 
 </html>

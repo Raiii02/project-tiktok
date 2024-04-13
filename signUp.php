@@ -34,11 +34,10 @@ if ($result->num_rows > 0) {
 $sql = "INSERT INTO users (email, name, username, profile_picture, password, birthday) VALUES ('$email', '$name', '$username', '$profile_picture' ,'$password', '$birthday')";
 
 if ($conn->query($sql) === TRUE) {
-    // Atur sesi untuk nama pengguna yang baru didaftarkan
-    $_SESSION['user_id'] = $row['id'];
-    // Redirect pengguna ke halaman setelah registrasi
+    $new_user_id = $conn->insert_id;
+    $_SESSION['id'] = $new_user_id;
     header("Location: index.php");
-    exit(); // Hentikan eksekusi skrip setelah redirect
+    exit();
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
