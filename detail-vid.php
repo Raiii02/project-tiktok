@@ -380,9 +380,8 @@ if (isset($_SESSION['id'])) {
                     </div>
                 </div>
                 <div class="BottomComment">
-                    <div class="content-bottom">
                         <?php if (isset($_SESSION['id'])) { ?>
-                            <form action="" method="post">
+                            <form action="" method="post" class="content-bottom">
                                 <div class="ComentInput">
                                     <input type="text" id="DivInput" name="comment_text" placeholder="Tambah Komentar">
                                     <div class="MentionWrapper">@</div>
@@ -396,7 +395,6 @@ if (isset($_SESSION['id'])) {
                                 <span>Masuk untuk Berkomentar</span>
                             </div>
                         <?php } ?>
-                    </div>
                 </div>
             </div>
         </div>

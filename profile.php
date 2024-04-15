@@ -48,7 +48,7 @@ if (isset($_SESSION['id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TikTok</title>
   <link rel="stylesheet" href="src/style/style.css" />
-  <link rel="stylesheet" href="style/css/responsive.css" />
+  <link rel="stylesheet" href="src/style/style.css" />
   <link rel="icon" type="image/png" href="src/assets/photo/icontiktok.jpg" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -158,11 +158,15 @@ if (isset($_SESSION['id'])) {
         </div>
       </div>
 
-      <div id="modal" class="modal">
+      <div id="modal" class="modal-profile">
         <div class="modal-content">
           <span class="close">&times;</span>
           <h2>Update Profile</h2>
           <form id="updateProfileForm" action="update_profile.php" method="post" enctype="multipart/form-data">
+            <div class="profile-image-edit">
+              <img id="profileImage" src="" alt="Profile Picture" width="100">
+            <input type="file" id="profile_picture" name="profile_picture">
+            </div>
             <label>Username:</label>
             <input type="text" id="username" name="username" required>
             <div id="username_error" class="error"></div>
@@ -170,32 +174,30 @@ if (isset($_SESSION['id'])) {
             <input type="text" id="name" name="name" required>
             <label>Bio:</label>
             <textarea id="bio" name="bio"></textarea>
-            <label>Profile Picture:</label>
-            <input type="file" id="profile_picture" name="profile_picture">
-            <img id="profileImage" src="" alt="Profile Picture" width="100">
-            <button type="submit">Update</button>
-            <button id="close" name="cancel">Batal</button>
+            <div class="button-group">
+              <button type="submit" class="submit">Update</button>
+              <button id="close" name="cancel">Batal</button>
+            </div>
           </form>
         </div>
       </div>
 
-      <div id="modal-success" class="modal <?php echo (isset($_SESSION['profile_update_success'])) ? 'show' : ''; ?>">
-        <div class="modal-content-success">
-          <span class="close-success">&times;</span>
-          <div id="success-message">
+     <div id="modal-success" <?php echo (isset($_SESSION['profile_update_success'])) ? 'style="display: block;"' : ''; ?>>
+    <div class="modal-content-success">
+        <span class="close-success">&times;</span>
+        <div id="success-message">
             <?php
             if (isset($_SESSION['profile_update_success'])) {
-              echo "<i class='fas fa-check-circle'></i><h1>Success!</h1> " . $_SESSION['profile_update_success'];
-              unset($_SESSION['profile_update_success']);
+                echo "<i class='fas fa-check-circle'></i><h1>Success!</h1> " . $_SESSION['profile_update_success'];
+                unset($_SESSION['profile_update_success']);
             }
             ?>
-          </div>
         </div>
-      </div>
-
     </div>
+</div>
+
   </content>
-  <script src="src/js/profile.js"></script>
+   <script src="src/js/profile.js"></script>
   <script src="src/js/login.js"></script>
   <?php if (!empty($success_message)) : ?>
     <script>

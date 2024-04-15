@@ -162,6 +162,7 @@ content {
   width: 100%;
   align-items: center;
   z-index: 1000;
+  overflow-y: hidden;
 }
 .content .center-content {
   /* margin-top: 60px; */
@@ -1960,11 +1961,11 @@ content {
 }
 
 .modal-content {
-  justify-content: center;
+  position: relative;
   align-items: center;
   background-color: #fefefe;
   margin: 10% auto;
-  height: 532px;
+  height: 600px;
   border: 1px solid #888;
   width: 32%;
   border-radius: 8px;
@@ -1983,7 +1984,7 @@ content {
 .close {
   color: #aaaaaa;
   position: absolute;
-  right: -18px;
+  right: 5px;
   top: 1px;
   border-radius: 50%;
   font-size: 28px;
@@ -2083,7 +2084,8 @@ content {
 h2 {
   color: rgb(22, 24, 35);
   font-size: 30px;
-  margin-bottom: 29px;
+  margin-bottom: 10px;
+  margin-top: 40px;
   font-weight: bold;
   text-align: center;
   overflow-wrap: break-word;
@@ -2125,6 +2127,11 @@ h2 {
   padding-inline-end: unset;
   position: relative;
   margin-bottom: 9px;
+}
+#username_email_error, #loginPasswordError, #passwordError, #emailError, #nameError, #confirmPasswordError, #birthday-error{
+  color: red;
+  margin: 5px 0;
+  font-size: 15px;
 }
 input[type="text"],
 input[type="password"],
@@ -2685,17 +2692,21 @@ input[type="email"] {
   flex-direction: row;
   align-items: center;
 }
-.PostButton {
-  margin: 0 10px;
-  color: rgba(22, 24, 35, 0.34);
-  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
-  font-weight: 600;
-  cursor: default;
-  flex: 0 0 48px;
-  font-size: 14px;
-  line-height: 39px;
-  text-align: right;
-  margin-right: 4px;
+.PostButton button {
+    margin: 0 10px;
+    font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+    font-weight: 600;
+    cursor: default;
+    border-radius: 5px;
+    flex: 0 0 48px;
+    font-size: 15px;
+    line-height: 39px;
+    text-align: right;
+    padding-inline: 26px;
+    color: white;
+    background-color: rgba(254, 44, 85, 1);
+    border: none;
+    margin-right: 4px;
 }
 .container-comment {
   margin-bottom: 20px;
@@ -2775,16 +2786,18 @@ i {
   padding: 21px 0px;
 }
 .ComentInput {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: rgba(22, 24, 35, 0.06);
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 0px 9px;
+  color: rgb(254, 44, 85);
+    font-weight: 600;
+    height: 100%;
+    background: rgb(241, 241, 241);
+    border-radius: 2px;
+    height: max-content;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: unset;
+    display: flex;
+    height: 40px;
+    width: 100%;
 }
 #DivInput {
   flex: 1 1 auto;
@@ -2817,6 +2830,7 @@ i {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+  align-items: center;
 }
 .VideoKreator {
   display: flex;
@@ -2832,8 +2846,10 @@ i {
 }
 
 .video-wrapper video {
-  width: 100%;
-  height: auto;
+      width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
 }
 .count {
   position: absolute;
@@ -3145,7 +3161,7 @@ input#file-upload-button {
   padding: 10px;
 }
 /* Modal Container */
-.modal {
+.content #modal-success {
   display: none;
   position: fixed;
   z-index: 1001;
@@ -3158,12 +3174,43 @@ input#file-upload-button {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal.show {
+.content #modal-success .show {
+  display: block;
+}
+ #modal-error {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+ #modal-error.show {
   display: block;
 }
 
 /* Modal Content */
 .modal-content-error {
+  position: relative;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 20px;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+  display: flex;
+  justify-content: center;
+}
+.modal-content-success {
   position: relative;
   background-color: #fefefe;
   margin: 15% auto;
@@ -3207,9 +3254,37 @@ input#file-upload-button {
   text-decoration: none;
   cursor: pointer;
 }
+.close-success {
+  position: absolute;
+  top: 5px;
+  right: 2px;
+  color: #aaaaaa;
+  border-radius: 50%;
+  font-size: 28px;
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  width: 24px;
+  height: 24px;
+  padding: 5px;
+  cursor: pointer;
+  background: rgba(22, 24, 35, 0.03);
+  margin-right: 10px;
+  margin-top: 10px;
+  z-index: 1;
+}
+
+.close-succes:hover,
+.close-succes:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 /* Error Message */
-#error-message {
+ #error-message {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -3220,12 +3295,34 @@ input#file-upload-button {
   margin-top: 20px;
   position: relative; /* Tambahkan */
 }
-#error-message h1,
-#error-message i {
+ #error-message h1,
+ #error-message i {
   color: rgb(206, 33, 33);
 }
 /* Icon */
-#error-message i {
+ #error-message i {
+  font-size: 50px;
+  margin-bottom: 10px; /* Ubah sesuai kebutuhan */
+  display: block;
+  margin: 0 auto; /* Tambahkan */
+}
+#success-message {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+  color:rgb(69, 218, 23);
+  font-size: 18px;
+  margin-top: 20px;
+  position: relative; /* Tambahkan */
+}
+ #success-message h1,
+#success-message i {
+  color:rgb(69, 218, 23);
+}
+/* Icon */
+#success-message i {
   font-size: 50px;
   margin-bottom: 10px; /* Ubah sesuai kebutuhan */
   display: block;
@@ -3298,3 +3395,88 @@ input#file-upload-button {
 #nextVideoBtn {
   right: 20px;
 } */
+.modal-profile {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow-x: hidden;
+}
+
+.modal-profile .show {
+  display: block;
+}
+#updateProfileForm{
+  margin:20px
+}
+#updateProfileForm  #bio{
+    border-radius: 2px;
+    background-color: rgba(22, 24, 35, 0.06);
+    border: 1px solid rgba(22, 24, 35, 0.12);
+    padding-inline-start: 12px;
+    color: rgb(22, 24, 35);
+    line-height: 100%;
+    outline: none;
+    font-size: 16px;
+    height: 84px;
+    caret-color: rgb(254, 44, 85);
+    width: 93%;
+    padding-inline-end: unset;
+    position: relative;
+    margin-bottom: 9px;
+}
+#profileImage{
+    border-radius: 100%;
+    height: 100px;
+    width: 100px;
+}
+.profile-image-edit{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+#updateProfileForm .button-group{
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+#updateProfileForm .submit{
+  width: 120px;
+    height: 38px;
+    border: 1px solid rgba(22, 24, 32, 0.12);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    background-color: #fe2c55;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#updateProfileForm .submit:disabled {
+  background-color: #fe2c55; /* Atur warna latar belakang sesuai keinginan */
+}
+
+#updateProfileForm #close{
+  width: 120px;
+    height: 38px;
+    border: 1px solid rgba(22, 24, 32, 0.12);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    background-color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}

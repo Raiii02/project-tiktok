@@ -138,8 +138,9 @@ if ($isLoggedIn) {
                     <option value="" disabled selected>Year</option>
                     <!-- Pilihan tahun akan diisi secara dinamis oleh JavaScript -->
                   </select>
-                  <div id="birthday-error" style="display: none; color: red;">Anda harus berusia minimal 18 tahun untuk mendaftar.</div>
+                  
                 </div>
+                <div id="birthday-error" style="display: none; color: red;">Anda harus berusia minimal 18 tahun untuk mendaftar.</div>
                 <div class="form-group">
                   <input type="email" id="email" name="email" placeholder="Email" required>
                   <div id="emailError" class="error"></div>
