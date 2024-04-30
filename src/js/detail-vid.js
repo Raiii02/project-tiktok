@@ -166,3 +166,21 @@ videoDescriptions.forEach((description) => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  var inputField = document.getElementById("DivInput");
+  var postButton = document.getElementById("postButton");
+
+  function handleInput() {
+    var inputText = inputField.value.trim();
+    if (inputText === "" || inputText === inputField.placeholder) {
+      postButton.disabled = true;
+      postButton.classList.add("disabled");
+    } else {
+      postButton.disabled = false;
+      postButton.classList.remove("disabled");
+    }
+  }
+
+  handleInput();
+  inputField.addEventListener("input", handleInput);
+});

@@ -5,7 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-$_SESSION['previous_page'] = $_SERVER['HTTP_REFERER'];
+if (isset($_SERVER['REQUEST_URI'])) {
+  $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
+}
 
 // Query data dari database
 $sql = "SELECT videos.*, users.username, users.name, users.profile_picture FROM videos JOIN users ON videos.user_id = users.id";

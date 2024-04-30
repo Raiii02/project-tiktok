@@ -4,9 +4,18 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-$_SESSION['previous_page'] = $_SERVER['HTTP_REFERER'];
+$isLoggedIn = isset($_SESSION['id']);
+
+if (isset($_SERVER['REQUEST_URI'])) {
+  $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
+}
 
 $sql = "SELECT videos.*, users.username, users.name, users.profile_picture FROM videos JOIN users ON videos.user_id = users.id";
+
+if (isset($_SESSION['id'])) {
+  $user_id = $_SESSION['id'];
+  $sql .= " WHERE videos.user_id != $user_id";
+}
 
 $result = $conn->query($sql);
 
@@ -14,9 +23,9 @@ $rows = array();
 while ($row = $result->fetch_assoc()) {
   $video_id = $row['id'];
   if (isset($_SESSION['id'])) {
-    $user_id = $_SESSION['id'];
+    $user_ids = $_SESSION['id'];
 
-    $like_sql = "SELECT like_count FROM likes WHERE user_id = $user_id AND video_id = $video_id";
+    $like_sql = "SELECT like_count FROM likes WHERE user_id = $user_ids AND video_id = $video_id";
     $like_result = $conn->query($like_sql);
 
     if ($like_result && $like_result->num_rows > 0) {
@@ -27,11 +36,17 @@ while ($row = $result->fetch_assoc()) {
     } else {
       $isLiked = false;
     }
+
+    $subscription_sql = "SELECT * FROM subscriptions WHERE subscriber_id = $user_ids AND user_id = " . $row['user_id'];
+    $subscription_result = $conn->query($subscription_sql);
+    $isSubscribed = $subscription_result && $subscription_result->num_rows > 0;
   } else {
     $isLiked = false;
+    $isSubscribed = false;
   }
 
   $row['isLiked'] = $isLiked;
+  $row['isSubscribed'] = $isSubscribed;
 
   $sql_count_likes = "SELECT COUNT(*) AS like_count FROM likes WHERE video_id = $video_id";
   $count_likes_result = $conn->query($sql_count_likes);
@@ -92,16 +107,22 @@ shuffle($rows);
           <?php foreach ($rows as $index => $row) { ?>
             <div class="content-right">
               <div class="avatar">
-                <img src="<?php echo $row['profile_picture']; ?>" width="55px" alt="">
+                <a href="profile.php?user_id=<?php echo $row['user_id']; ?>">
+                  <img src="<?php echo $row['profile_picture']; ?>" width="55px" alt="">
+                </a>
               </div>
               <div class="content-playlist">
                 <div class="playlist-info">
                   <div class="playlist-info-name">
-                    <div class="name-user"><?php echo $row['username']; ?>
-                      <div class="nickname"><?php echo $row['name']; ?></div>
-                    </div>
+                    <a href="profile.php?user_id=<?php echo $row['user_id']; ?>">
+                      <div class="name-user"><?php echo $row['username']; ?>
+                        <div class="nickname"><?php echo $row['name']; ?></div>
+                      </div>
+                    </a>
                   </div>
-                  <button class="subscribe">Subscribe</button>
+                  <button class="subscribe <?php echo $row['isSubscribed'] ? 'subscribed' : ''; ?>" onclick="toggleSubscribe(this, <?php echo $row['user_id']; ?>)">
+                    <?php echo $row['isSubscribed'] ? "Unsubscribe" : "Subscribe"; ?>
+                  </button>
                   <div class="info-video">
                     <span><?php echo $row['description']; ?></span>
                   </div>
@@ -143,9 +164,63 @@ shuffle($rows);
     </div>
   </content>
 
+  <div id="modal-error-subs" class="modal">
+    <div class="modal-content-error">
+      <span class="close-error-subs">&times;</span>
+      <div id="error-message">
+        <i class='fas fa-exclamation-circle'></i>
+        <h1>Oppss!</h1>
+        Please log in to subscribe.
+      </div>
+    </div>
+  </div>
+
   <script src="src/js/index.js"></script>
   <script src="src/js/login.js"></script>
   <script>
+    function toggleSubscribe(button, userId) {
+      const isSubscribed = !button.classList.contains('subscribed');
+      const modalError = document.getElementById('modal-error-subs');
+
+      if (!isLoggedIn()) {
+        console.error('User is not logged in.');
+        // Tampilkan modal error
+        modalError.style.display = 'block';
+        setTimeout(() => {
+          modalError.style.display = 'none';
+        }, 3000); // Sembunyikan modal setelah 3 detik
+        return; // Hentikan eksekusi fungsi
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'subscribe.php');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+      const data = `user_id=${userId}&is_subscribed=${isSubscribed}`;
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          const responseData = JSON.parse(xhr.responseText);
+          if (isSubscribed) {
+            button.textContent = 'Unsubscribe';
+            button.classList.add('subscribed');
+          } else {
+            button.textContent = 'Subscribe';
+            button.classList.remove('subscribed');
+          }
+        } else {
+          console.error('Failed to toggle subscribe: Server returned status ' + xhr.status);
+        }
+      };
+      xhr.send(data);
+    }
+
+
+
+    function isLoggedIn() {
+      return <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
+    }
+
+
     function toggleLike(button, videoId) {
       const isLiked = button.classList.contains('active');
       const heartIcon = button.querySelector('i');

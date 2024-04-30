@@ -1516,6 +1516,7 @@ content {
   background-color: rgb(255, 238, 242);
   color: rgba(254, 44, 85, 1);
 }
+
 .center-content-right
   .content-right
   .content-playlist
@@ -1780,7 +1781,7 @@ content {
   line-height: 24px;
 }
 
-.btn-profile {
+.btn-profile-edit {
   border-radius: 4px;
   border: none;
   color: #fff;
@@ -1789,7 +1790,29 @@ content {
   width: 200px;
   margin-top: 10px;
   font: 600 18px/22px TikTokDisplayFont, PingFangSC, sans-serif;
+  cursor: pointer;
 }
+
+.btn-profile {
+  border-radius: 4px;
+  min-height: 36px;
+  width: 200px;
+  margin-top: 10px;
+  font: 600 18px/22px TikTokDisplayFont, PingFangSC, sans-serif;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  color: rgba(254, 44, 85, 1);
+  border-color: rgba(254, 44, 85, 1);
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.btn-profile:hover {
+  background-color: rgb(255, 238, 242);
+  color: rgba(254, 44, 85, 1);
+}
+
 .info-number {
   display: flex;
   -webkit-box-align: center;
@@ -2128,7 +2151,13 @@ h2 {
   position: relative;
   margin-bottom: 9px;
 }
-#username_email_error, #loginPasswordError, #passwordError, #emailError, #nameError, #confirmPasswordError, #birthday-error{
+#username_email_error,
+#loginPasswordError,
+#passwordError,
+#emailError,
+#nameError,
+#confirmPasswordError,
+#birthday-error {
   color: red;
   margin: 5px 0;
   font-size: 15px;
@@ -2693,20 +2722,20 @@ input[type="email"] {
   align-items: center;
 }
 .PostButton button {
-    margin: 0 10px;
-    font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
-    font-weight: 600;
-    cursor: default;
-    border-radius: 5px;
-    flex: 0 0 48px;
-    font-size: 15px;
-    line-height: 39px;
-    text-align: right;
-    padding-inline: 26px;
-    color: white;
-    background-color: rgba(254, 44, 85, 1);
-    border: none;
-    margin-right: 4px;
+  margin: 0 10px;
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  cursor: default;
+  border-radius: 5px;
+  flex: 0 0 48px;
+  font-size: 15px;
+  line-height: 39px;
+  text-align: right;
+  padding-inline: 26px;
+  color: white;
+  background-color: rgba(254, 44, 85, 1);
+  border: none;
+  margin-right: 4px;
 }
 .container-comment {
   margin-bottom: 20px;
@@ -2764,7 +2793,7 @@ i {
 }
 .subcoment span {
   display: inline-block;
-  width: 64px;
+  width: 80px;
   white-space: nowrap;
 }
 
@@ -2787,17 +2816,17 @@ i {
 }
 .ComentInput {
   color: rgb(254, 44, 85);
-    font-weight: 600;
-    height: 100%;
-    background: rgb(241, 241, 241);
-    border-radius: 2px;
-    height: max-content;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: unset;
-    display: flex;
-    height: 40px;
-    width: 100%;
+  font-weight: 600;
+  height: 100%;
+  background: rgb(241, 241, 241);
+  border-radius: 2px;
+  height: max-content;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: unset;
+  display: flex;
+  height: 40px;
+  width: 100%;
 }
 #DivInput {
   flex: 1 1 auto;
@@ -2846,10 +2875,10 @@ i {
 }
 
 .video-wrapper video {
-      width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
 }
 .count {
   position: absolute;
@@ -3177,7 +3206,7 @@ input#file-upload-button {
 .content #modal-success .show {
   display: block;
 }
- #modal-error {
+#modal-error {
   display: none;
   position: fixed;
   z-index: 1001;
@@ -3190,7 +3219,24 @@ input#file-upload-button {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
- #modal-error.show {
+#modal-error.show {
+  display: block;
+}
+
+#modal-error-subs {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#modal-error-subs.show {
   display: block;
 }
 
@@ -3227,7 +3273,8 @@ input#file-upload-button {
 }
 /* Close Button */
 
-.close-error {
+.close-error,
+.close-error-subs {
   position: absolute;
   top: 5px;
   right: 2px;
@@ -3248,6 +3295,8 @@ input#file-upload-button {
   z-index: 1;
 }
 
+.close-error-subs:hover,
+.close-error-subs:focus,
 .close-error:hover,
 .close-error:focus {
   color: #000;
@@ -3284,7 +3333,7 @@ input#file-upload-button {
 }
 
 /* Error Message */
- #error-message {
+#error-message {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -3295,12 +3344,12 @@ input#file-upload-button {
   margin-top: 20px;
   position: relative; /* Tambahkan */
 }
- #error-message h1,
- #error-message i {
+#error-message h1,
+#error-message i {
   color: rgb(206, 33, 33);
 }
 /* Icon */
- #error-message i {
+#error-message i {
   font-size: 50px;
   margin-bottom: 10px; /* Ubah sesuai kebutuhan */
   display: block;
@@ -3312,14 +3361,14 @@ input#file-upload-button {
   flex-direction: column;
   gap: 30px;
   padding: 20px;
-  color:rgb(69, 218, 23);
+  color: rgb(69, 218, 23);
   font-size: 18px;
   margin-top: 20px;
   position: relative; /* Tambahkan */
 }
- #success-message h1,
+#success-message h1,
 #success-message i {
-  color:rgb(69, 218, 23);
+  color: rgb(69, 218, 23);
 }
 /* Icon */
 #success-message i {
@@ -3412,71 +3461,82 @@ input#file-upload-button {
 .modal-profile .show {
   display: block;
 }
-#updateProfileForm{
-  margin:20px
+#updateProfileForm {
+  margin: 20px;
 }
-#updateProfileForm  #bio{
-    border-radius: 2px;
-    background-color: rgba(22, 24, 35, 0.06);
-    border: 1px solid rgba(22, 24, 35, 0.12);
-    padding-inline-start: 12px;
-    color: rgb(22, 24, 35);
-    line-height: 100%;
-    outline: none;
-    font-size: 16px;
-    height: 84px;
-    caret-color: rgb(254, 44, 85);
-    width: 93%;
-    padding-inline-end: unset;
-    position: relative;
-    margin-bottom: 9px;
+#updateProfileForm #bio {
+  border-radius: 2px;
+  background-color: rgba(22, 24, 35, 0.06);
+  border: 1px solid rgba(22, 24, 35, 0.12);
+  padding-inline-start: 12px;
+  color: rgb(22, 24, 35);
+  line-height: 100%;
+  outline: none;
+  font-size: 16px;
+  height: 84px;
+  caret-color: rgb(254, 44, 85);
+  width: 93%;
+  padding-inline-end: unset;
+  position: relative;
+  margin-bottom: 9px;
 }
-#profileImage{
-    border-radius: 100%;
-    height: 100px;
-    width: 100px;
+#profileImage {
+  border-radius: 100%;
+  height: 100px;
+  width: 100px;
 }
-.profile-image-edit{
+.profile-image-edit {
   display: flex;
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
 }
-#updateProfileForm .button-group{
+#updateProfileForm .button-group {
   display: flex;
   gap: 10px;
   justify-content: end;
 }
-#updateProfileForm .submit{
+#updateProfileForm .submit {
   width: 120px;
-    height: 38px;
-    border: 1px solid rgba(22, 24, 32, 0.12);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    background-color: #fe2c55;
-    font-size: 14px;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
+  height: 38px;
+  border: 1px solid rgba(22, 24, 32, 0.12);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: #fe2c55;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
 }
 #updateProfileForm .submit:disabled {
-  background-color: #fe2c55; /* Atur warna latar belakang sesuai keinginan */
+  background-color: #fe2c55;
 }
 
-#updateProfileForm #close{
+#updateProfileForm #close {
   width: 120px;
-    height: 38px;
-    border: 1px solid rgba(22, 24, 32, 0.12);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    background-color: #fff;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
+  height: 38px;
+  border: 1px solid rgba(22, 24, 32, 0.12);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.playlist-info .playlist-info-name a {
+  text-decoration: none;
+  color: #000;
+}
+
+.disabled {
+  color: rgba(22, 24, 35, 0.34);
+  background-color: transparent;
+  cursor: not-allowed;
 }

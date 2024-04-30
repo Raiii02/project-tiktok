@@ -5,17 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_SERVER['HTTP_REFERER'])) {
-    if (strpos($_SERVER['HTTP_REFERER'], 'index.php') !== false) {
-        $_SESSION['previous_page'] = 'index.php';
-    } elseif (strpos($_SERVER['HTTP_REFERER'], 'jelajahi.php') !== false) {
-        $_SESSION['previous_page'] = 'jelajahi.php';
-    } elseif (strpos($_SERVER['HTTP_REFERER'], 'jelajahi.php') !== false) {
-        $_SESSION['previous_page'] = 'profile.php';
-    }
-} else {
-    $_SESSION['previous_page'] = '';
-}
+$isLoggedIn = isset($_SESSION['id']);
 
 // Memeriksa apakah parameter video_id disetel dan query berhasil dieksekusi
 if (isset($_GET['video_id'])) {
@@ -33,6 +23,20 @@ if (isset($_GET['video_id'])) {
 
     if ($videoResult->num_rows > 0) {
         $videoData = $videoResult->fetch_assoc();
+
+        $user_id = $videoData['user_id'];
+
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            if (strpos($_SERVER['HTTP_REFERER'], 'index.php') !== false) {
+                $_SESSION['previous_page'] = 'index.php';
+            } elseif (strpos($_SERVER['HTTP_REFERER'], 'jelajahi.php') !== false) {
+                $_SESSION['previous_page'] = 'jelajahi.php';
+            } elseif (strpos($_SERVER['HTTP_REFERER'], 'profile.php') !== false) {
+                $_SESSION['previous_page'] = "profile.php?user_id=$user_id";
+            }
+        } else {
+            $_SESSION['previous_page'] = '';
+        }
 
         $randomVideoIdsJson = $_GET['randomVideoIds'] ?? '[]';
         $randomVideoIds = json_decode($randomVideoIdsJson, true);
@@ -52,7 +56,9 @@ if (isset($_GET['video_id'])) {
         $weeks_diff = floor($time_diff / (60 * 60 * 24 * 7));
         $months_diff = floor($time_diff / (60 * 60 * 24 * 30.44));
 
-        if ($minutes_diff < 60) {
+        if ($minutes_diff < 1) {
+            $formatted_comment_posted_at = "Baru saja";
+        } elseif ($minutes_diff < 60) {
             $formatted_posted_at = "$minutes_diff menit yang lalu";
         } elseif ($hours_diff < 24) {
             $formatted_posted_at = "$hours_diff jam yang lalu";
@@ -76,26 +82,36 @@ if (isset($_GET['video_id'])) {
     $commentResult = $conn->query($sql_comments);
 
     if ($commentResult && $commentResult->num_rows > 0) {
-        $commentData = $commentResult->fetch_assoc();
-        $current_time = time();
-        $comment_uploaded_time = strtotime($commentData['created_at']);
+        while ($commentData = $commentResult->fetch_assoc()) {
+            // Ambil perbedaan waktu antara waktu unggahan dan waktu saat ini
+            $current_time = time();
+            $comment_uploaded_time = strtotime($commentData['created_at']);
+            $time_diff = $current_time - $comment_uploaded_time;
 
-        $time_diff = $current_time - $comment_uploaded_time;
-        $hours_diff = floor($time_diff / (60 * 60));
-        $days_diff = floor($time_diff / (60 * 60 * 24));
-        $weeks_diff = floor($time_diff / (60 * 60 * 24 * 7));
-        $months_diff = floor($time_diff / (60 * 60 * 24 * 30.44));
+            $minutes_diff = floor($time_diff / 60);
+            $hours_diff = floor($time_diff / (60 * 60));
+            $days_diff = floor($time_diff / (60 * 60 * 24));
+            $weeks_diff = floor($time_diff / (60 * 60 * 24 * 7));
+            $months_diff = floor($time_diff / (60 * 60 * 24 * 30.44));
 
-        if ($hours_diff < 24) {
-            $formatted_comment_posted_at = $hours_diff . "j yang lalu";
-        } elseif ($days_diff < 7) {
-            $formatted_comment_posted_at = $days_diff . "h yang lalu";
-        } elseif ($weeks_diff < 4) {
-            $formatted_comment_posted_at = $weeks_diff . "m yang lalu";
-        } elseif ($months_diff < 12) {
-            $formatted_comment_posted_at = date('F j', $comment_uploaded_time);
-        } else {
-            $formatted_comment_posted_at = date('F Y', $comment_uploaded_time);
+            // Pemformatan waktu berdasarkan perbedaan waktu
+            if ($minutes_diff < 1) {
+                $formatted_comment_posted_at = "Baru saja";
+            } elseif ($minutes_diff < 60) {
+                $formatted_comment_posted_at = $minutes_diff . "menit yang lalu";
+            } elseif ($hours_diff < 24) {
+                $formatted_comment_posted_at = $hours_diff . "j yang lalu";
+            } elseif ($days_diff < 7) {
+                $formatted_comment_posted_at = $days_diff . "h yang lalu";
+            } elseif ($weeks_diff < 4) {
+                $formatted_comment_posted_at = $weeks_diff . "m yang lalu";
+            } elseif (
+                $months_diff < 12
+            ) {
+                $formatted_comment_posted_at = date('F j', $comment_uploaded_time);
+            } else {
+                $formatted_comment_posted_at = date('F Y', $comment_uploaded_time);
+            }
         }
     }
 
@@ -127,22 +143,22 @@ if (isset($_GET['video_id'])) {
 }
 
 if (isset($_SESSION['id'])) {
-    $user_id = $_SESSION['id'];
+    $user_ids = $_SESSION['id'];
     if (isset($_POST['submit_comment'])) {
         // Ambil data yang dikirim dari formulir
         $comment_text = $_POST['comment_text'];
-        $sql_insert_comment = "INSERT INTO comments (user_id, video_id, comment_text) VALUES ('$user_id', '$video_id', '$comment_text')";
+        $sql_insert_comment = "INSERT INTO comments (user_id, video_id, comment_text) VALUES ('$user_ids', '$video_id', '$comment_text')";
 
         // Eksekusi query
         if ($conn->query($sql_insert_comment) === TRUE) {
-            header("Location: detail-vid.php?video_id=$video_id");
+            header("Location: detail-vid.php?video_id=$video_id&prev_video_id=$prevVideoId&next_video_id=$nextVideoId&randomVideoIds=" . urlencode(json_encode($randomVideoIds)));
             exit();
         } else {
             echo "Error: " . $sql_insert_comment . "<br>" . $conn->error;
         }
     }
 
-    $like_sql = "SELECT like_count FROM likes WHERE user_id = $user_id AND video_id = $video_id";
+    $like_sql = "SELECT like_count FROM likes WHERE user_id = $user_ids AND video_id = $video_id";
     $like_result = $conn->query($like_sql);
 
     if ($like_result && $like_result->num_rows > 0) {
@@ -153,8 +169,17 @@ if (isset($_SESSION['id'])) {
     } else {
         $isLiked = false;
     }
-
     $isLikedJSON = json_encode($isLiked);
+
+
+    $sql_check_subscription = "SELECT * FROM subscriptions WHERE subscriber_id = ? AND user_id = ?";
+    $check_subscription_stmt = $conn->prepare($sql_check_subscription);
+    $check_subscription_stmt->bind_param("ii", $user_ids, $user_id);
+    $check_subscription_stmt->execute();
+    $check_subscription_result = $check_subscription_stmt->get_result();
+
+    // Periksa apakah langganan ditemukan
+    $isSubscribed = $check_subscription_result && $check_subscription_result->num_rows > 0;
 }
 ?>
 
@@ -236,7 +261,9 @@ if (isset($_SESSION['id'])) {
                                             <a href="profile.php" class="UserName">
                                                 <span id="nama"><?php echo $userData['username']; ?></span><br><span id="bio"><?php echo $userData['name']; ?> . <?php echo $formatted_posted_at; ?></span>
                                             </a>
-                                            <button class="ButtonFollow">Ikuti</button>
+                                            <button class="ButtonFollow <?php echo $isSubscribed ? 'subscribed' : ''; ?>" onclick="toggleSubscribe(this, <?php echo $user_id; ?>)">
+                                                <?php echo $isSubscribed ? "Unsubscribe" : "Subscribe"; ?>
+                                            </button>
                                         </div>
                                         <div class="
                                         Detail">
@@ -306,6 +333,10 @@ if (isset($_SESSION['id'])) {
                         </div>
                         <div class="tabcon" id="Komentar">
                             <?php
+                            $sql_comments = "SELECT * FROM comments WHERE video_id = $video_id";
+                            $commentResult = $conn->query($sql_comments);
+
+                            // Memeriksa apakah query berhasil dieksekusi dan hasilnya tidak kosong
                             if ($commentResult && $commentResult->num_rows > 0) {
                                 while ($commentData = $commentResult->fetch_assoc()) {
                                     // Ambil user_id dari komentar
@@ -315,7 +346,6 @@ if (isset($_SESSION['id'])) {
                                     $user_info_result = $conn->query($sql_user_info);
                                     if ($user_info_result && $user_info_result->num_rows > 0) {
                                         $user_info = $user_info_result->fetch_assoc();
-                                        // Tampilkan foto profil dan username pengguna
                             ?>
                                         <div class="container-comment">
                                             <div class="content-comment">
@@ -380,21 +410,21 @@ if (isset($_SESSION['id'])) {
                     </div>
                 </div>
                 <div class="BottomComment">
-                        <?php if (isset($_SESSION['id'])) { ?>
-                            <form action="" method="post" class="content-bottom">
-                                <div class="ComentInput">
-                                    <input type="text" id="DivInput" name="comment_text" placeholder="Tambah Komentar">
-                                    <div class="MentionWrapper">@</div>
-                                </div>
-                                <div class="PostButton">
-                                    <button type="submit" name="submit_comment">Posting</button>
-                                </div>
-                            </form>
-                        <?php } else { ?>
+                    <?php if (isset($_SESSION['id'])) { ?>
+                        <form action="" method="post" class="content-bottom">
                             <div class="ComentInput">
-                                <span>Masuk untuk Berkomentar</span>
+                                <input type="text" id="DivInput" name="comment_text" placeholder="Tambah Komentar">
+                                <div class="MentionWrapper">@</div>
                             </div>
-                        <?php } ?>
+                            <div class="PostButton">
+                                <button type="submit" name="submit_comment" id="postButton">Posting</button>
+                            </div>
+                        </form>
+                    <?php } else { ?>
+                        <div class="ComentInput">
+                            <span>Masuk untuk Berkomentar</span>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -448,8 +478,49 @@ if (isset($_SESSION['id'])) {
                 window.location.href = '<?php echo $_SESSION['previous_page']; ?>';
             <?php endif; ?>
         });
-    </script>
 
+        function toggleSubscribe(button, userId) {
+            const isSubscribed = !button.classList.contains('subscribed');
+            const modalError = document.getElementById('modal-error-subs');
+
+            if (!isLoggedIn()) {
+                console.error('User is not logged in.');
+                // Tampilkan modal error
+                modalError.style.display = 'block';
+                setTimeout(() => {
+                    modalError.style.display = 'none';
+                }, 3000); // Sembunyikan modal setelah 3 detik
+                return; // Hentikan eksekusi fungsi
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'subscribe.php');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            const data = `user_id=${userId}&is_subscribed=${isSubscribed}`;
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                        const responseData = JSON.parse(xhr.responseText);
+                    if (isSubscribed) {
+                        button.textContent = 'Unsubscribe';
+                        button.classList.add('subscribed');
+                    } else {
+                        button.textContent = 'Subscribe';
+                        button.classList.remove('subscribed');
+                    }
+                } else {
+                    console.error('Failed to toggle subscribe: Server returned status ' + xhr.status);
+                }
+            };
+            xhr.send(data);
+        }
+
+
+
+        function isLoggedIn() {
+            return <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
+        }
+    </script>
 
 </body>
 

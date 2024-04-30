@@ -16,7 +16,7 @@ if ($isLoggedIn) {
 
   if ($userResult && $userResult->num_rows > 0) {
     $userData = $userResult->fetch_assoc();
-    $profile_picture = $userData['profile_picture'];
+    $profile = $userData['profile_picture'];
   }
 }
 
@@ -51,10 +51,10 @@ if ($isLoggedIn) {
 
         <div class="avatar">
           <div>
-            <img src="<?php echo $profile_picture; ?>" width="30px" alt="">
+            <img src="<?php echo $profile; ?>" width="30px" alt="">
             <div class="profile">
               <div class="profile-content">
-                <a href="profile.php"><i class="far fa-user"></i><span>See Profile</span></a>
+                <a href="profile.php?user_id=<?php echo $user_id; ?>"><i class="far fa-user"></i><span>See Profile</span></a>
                 <a><i class="fab fa-tiktok"></i><span></span>Get Coins</span></a>
                 <a><i class="fas fa-cog"></i><span></span>Settings</span></a>
                 <a><i class="fas fa-language"></i><span></span>French</span></a>
@@ -138,7 +138,7 @@ if ($isLoggedIn) {
                     <option value="" disabled selected>Year</option>
                     <!-- Pilihan tahun akan diisi secara dinamis oleh JavaScript -->
                   </select>
-                  
+
                 </div>
                 <div id="birthday-error" style="display: none; color: red;">Anda harus berusia minimal 18 tahun untuk mendaftar.</div>
                 <div class="form-group">

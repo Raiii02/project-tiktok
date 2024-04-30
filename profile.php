@@ -5,36 +5,58 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-$_SESSION['previous_page'] = $_SERVER['HTTP_REFERER'];
+if (isset($_SERVER['REQUEST_URI'])) {
+  $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
+}
 
+$isLoggedIn = isset($_SESSION['id']);
 
-if (isset($_SESSION['id'])) {
-  $user_id = $_SESSION['id'];
+$user_id = isset($_GET['user_id']) ? $_GET['user_id'] : (isset($_SESSION['id']) ? $_SESSION['id'] : null);
 
-  // Query informasi pengguna
-  $userQuery = "SELECT * FROM users WHERE id = $user_id";
-  $userResult = mysqli_query($conn, $userQuery);
+$userQuery = "SELECT * FROM users WHERE id = ?";
+$userStmt = $conn->prepare($userQuery);
+$userStmt->bind_param("i", $user_id);
+$userStmt->execute();
+$userResult = $userStmt->get_result();
 
-  if ($userResult && $userResult->num_rows > 0) {
-    // Ambil data pengguna dari hasil query
-    $userData = mysqli_fetch_assoc($userResult);
-    $profile_picture = $userData['profile_picture'];
-    $username = $userData['username'];
-    $name = $userData['name'];
-    $bio = $userData['bio'];
+if ($userResult && $userResult->num_rows > 0) {
+  $userData = $userResult->fetch_assoc();
+  $profile_picture = $userData['profile_picture'];
+  $username = $userData['username'];
+  $name = $userData['name'];
+  $bio = $userData['bio'];
 
-    // Query video-video yang dimiliki oleh pengguna
-    $videoQuery = "SELECT videos.id AS id, videos.video_path, videos.description FROM videos JOIN users ON videos.user_id = users.id WHERE videos.user_id = $user_id ORDER BY videos.created_at DESC";
-    $videoResult = mysqli_query($conn, $videoQuery);
+  $videoQuery = "SELECT videos.id AS id, videos.video_path, videos.description FROM videos JOIN users ON videos.user_id = users.id WHERE videos.user_id = ?";
+  $videoStmt = $conn->prepare($videoQuery);
+  $videoStmt->bind_param("i", $user_id);
+  $videoStmt->execute();
+  $videoResult = $videoStmt->get_result();
 
+  if ($videoResult && $videoResult->num_rows > 0) {
     $rows = array();
     while ($row = $videoResult->fetch_assoc()) {
+      $viewed_user_id = isset($_GET['user_id']) ? $_GET['user_id'] : (isset($_SESSION['id']) ? $_SESSION['id'] : null);
+      $isSubscribed = false;
+
+      // Periksa apakah pengguna yang sedang masuk berlangganan pengguna yang sedang dilihat
+      if ($isLoggedIn && isset($_GET['user_id']) && $_SESSION['id'] != $_GET['user_id']) {
+        $subscriber_id = $_SESSION['id'];
+        $subscription_sql = "SELECT * FROM subscriptions WHERE subscriber_id = $subscriber_id AND user_id = ?";
+        $subscription_stmt = $conn->prepare($subscription_sql);
+        $subscription_stmt->bind_param("i", $viewed_user_id);
+        $subscription_stmt->execute();
+        $subscription_result = $subscription_stmt->get_result();
+        $isSubscribed = $subscription_result && $subscription_result->num_rows > 0;
+      }
+      $row['isSubscribed'] = $isSubscribed;
+
       $rows[] = $row;
     }
-  } else {
-    // Jika query tidak mengembalikan hasil atau tidak berhasil dieksekusi, tampilkan pesan kesalahan
-    echo "Error: Query tidak mengembalikan hasil yang valid.";
   }
+
+  $is_logged_in_user = isset($_SESSION['id']) && $_SESSION['id'] == $user_id;
+} else {
+  echo "Error: Pengguna tidak ditemukan.";
 }
 
 ?>
@@ -74,7 +96,13 @@ if (isset($_SESSION['id'])) {
                 <div class="text-profile">
                   <h1><?php echo $username; ?></h1>
                   <h6><?php echo $name; ?></h6>
-                  <button id="editButton" class="btn-profile">Edit</button>
+                  <?php if ($is_logged_in_user) : ?>
+                    <button id="editButton" class="btn-profile-edit">Edit</button>
+                  <?php else : ?>
+                    <button id="subscribeButton" class="btn-profile <?php echo $isSubscribed ? 'subscribed' : ''; ?>" onclick="toggleSubscribe(this, <?php echo $viewed_user_id; ?>)">
+                      <?php echo $isSubscribed ? "Unsubscribe" : "Subscribe"; ?>
+                    </button>
+                  <?php endif; ?>
                 </div>
               </div>
               <div class="info-number">
@@ -165,7 +193,7 @@ if (isset($_SESSION['id'])) {
           <form id="updateProfileForm" action="update_profile.php" method="post" enctype="multipart/form-data">
             <div class="profile-image-edit">
               <img id="profileImage" src="" alt="Profile Picture" width="100">
-            <input type="file" id="profile_picture" name="profile_picture">
+              <input type="file" id="profile_picture" name="profile_picture">
             </div>
             <label>Username:</label>
             <input type="text" id="username" name="username" required>
@@ -182,22 +210,33 @@ if (isset($_SESSION['id'])) {
         </div>
       </div>
 
-     <div id="modal-success" <?php echo (isset($_SESSION['profile_update_success'])) ? 'style="display: block;"' : ''; ?>>
-    <div class="modal-content-success">
-        <span class="close-success">&times;</span>
-        <div id="success-message">
+      <div id="modal-success" <?php echo (isset($_SESSION['profile_update_success'])) ? 'style="display: block;"' : ''; ?>>
+        <div class="modal-content-success">
+          <span class="close-success">&times;</span>
+          <div id="success-message">
             <?php
             if (isset($_SESSION['profile_update_success'])) {
-                echo "<i class='fas fa-check-circle'></i><h1>Success!</h1> " . $_SESSION['profile_update_success'];
-                unset($_SESSION['profile_update_success']);
+              echo "<i class='fas fa-check-circle'></i><h1>Success!</h1> " . $_SESSION['profile_update_success'];
+              unset($_SESSION['profile_update_success']);
             }
             ?>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+
+      <div id="modal-error-subs" class="modal">
+        <div class="modal-content-error">
+          <span class="close-error-subs">&times;</span>
+          <div id="error-message">
+            <i class='fas fa-exclamation-circle'></i>
+            <h1>Oppss!</h1>
+            Please log in to subscribe.
+          </div>
+        </div>
+      </div>
 
   </content>
-   <script src="src/js/profile.js"></script>
+  <script src="src/js/profile.js"></script>
   <script src="src/js/login.js"></script>
   <?php if (!empty($success_message)) : ?>
     <script>
@@ -211,6 +250,47 @@ if (isset($_SESSION['id'])) {
       });
     </script>
   <?php endif; ?>
+  <script>
+    function toggleSubscribe(button, userId) {
+      const isSubscribed = !button.classList.contains('subscribed');
+      const modalError = document.getElementById('modal-error-subs');
+
+      if (!isLoggedIn()) {
+        console.error('User is not logged in.');
+        // Tampilkan modal error
+        modalError.style.display = 'block';
+        setTimeout(() => {
+          modalError.style.display = 'none';
+        }, 3000); // Sembunyikan modal setelah 3 detik
+        return; // Hentikan eksekusi fungsi
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'subscribe.php');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+      const data = `user_id=${userId}&is_subscribed=${isSubscribed}`;
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          const responseData = JSON.parse(xhr.responseText);
+          if (isSubscribed) {
+            button.textContent = 'Unsubscribe';
+            button.classList.add('subscribed');
+          } else {
+            button.textContent = 'Subscribe';
+            button.classList.remove('subscribed');
+          }
+        } else {
+          console.error('Failed to toggle subscribe: Server returned status ' + xhr.status);
+        }
+      };
+      xhr.send(data);
+    }
+
+    function isLoggedIn() {
+      return <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
+    }
+  </script>
 </body>
 
 </html>

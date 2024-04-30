@@ -72,7 +72,7 @@ videoDescriptions.forEach((description) => {
 });
 
 var modalProfile = document.getElementById("modal");
-var btn = document.querySelector(".btn-profile");
+var btn = document.getElementById("editButton");
 var closeElements = document.querySelectorAll(".close, #close");
 
 closeElements.forEach(function (element) {
