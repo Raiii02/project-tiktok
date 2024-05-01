@@ -252,7 +252,8 @@ content {
   .center-content-left
   .content-left
   .content-left-top
-  .subcriptions {
+  .subcriptions
+  .side-link {
   display: flex;
   align-items: center;
   width: calc(100% - 15px);
@@ -266,6 +267,7 @@ content {
   .content-left
   .content-left-top
   .subcriptions
+  .side-link
   span {
   padding: 5px 0px 0px 10px;
   color: #000;
@@ -1480,6 +1482,7 @@ content {
   flex-direction: row;
   align-items: center;
 }
+
 .center-content-right
   .content-right
   .content-playlist
@@ -1488,9 +1491,48 @@ content {
   border-width: 1px;
   border-style: solid;
   border-radius: 4px;
-  color: rgba(254, 44, 85, 1);
+  color: rgba(255, 255, 255, 1);
   border-color: rgba(254, 44, 85, 1);
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(254, 44, 85, 1);
+  min-height: 28px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  right: 0;
+  position: absolute;
+  top: 20px;
+  width: 133px;
+  padding: 6px 15px;
+}
+
+.center-content-right
+  .content-right
+  .content-playlist
+  .playlist-info
+  .subscribe:hover {
+  background-color: rgb(224, 36, 74);
+  border-color: rgb(224, 36, 74);
+  color: #fff;
+}
+
+.center-content-right
+  .content-right
+  .content-playlist
+  .playlist-info
+  .subscribe.subscribed {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  color: #161823;
+  background-color: #fff;
+  border-color: #e3e3e3;
   min-height: 28px;
   font-size: 16px;
   line-height: 22px;
@@ -1508,13 +1550,15 @@ content {
   min-width: 88px;
   padding: 3px 15px;
 }
+
 .center-content-right
   .content-right
   .content-playlist
   .playlist-info
-  .subscribe:hover {
-  background-color: rgb(255, 238, 242);
-  color: rgba(254, 44, 85, 1);
+  .subscribe.subscribed:hover {
+  border-color: #d3d3d3;
+  background-color: rgb(241, 241, 241);
+  color: #000;
 }
 
 .center-content-right
@@ -1803,14 +1847,15 @@ content {
   border-width: 1px;
   border-style: solid;
   border-radius: 4px;
-  color: rgba(254, 44, 85, 1);
+  color: rgba(255, 255, 255, 1);
   border-color: rgba(254, 44, 85, 1);
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(254, 44, 85, 1);
 }
 
 .btn-profile:hover {
-  background-color: rgb(255, 238, 242);
-  color: rgba(254, 44, 85, 1);
+  background-color: rgb(224, 36, 74);
+  border-color: rgb(224, 36, 74);
+  color: #fff;
 }
 
 .info-number {
@@ -2523,9 +2568,15 @@ input[type="email"] {
   font-size: 18px;
   height: 36px;
   padding-inline: 15px;
-  color: white;
+  color: #fff;
   background-color: rgba(254, 44, 85, 1);
   border-color: rgba(254, 44, 85, 1);
+}
+
+.ButtonFollow:hover {
+  background-color: rgb(224, 36, 74);
+  border-color: rgb(224, 36, 74);
+  color: #fff;
 }
 
 .ProfileWrapper .CardProfile .Detail {
@@ -3539,4 +3590,135 @@ input#file-upload-button {
   color: rgba(22, 24, 35, 0.34);
   background-color: transparent;
   cursor: not-allowed;
+}
+
+.container-subs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-subs {
+  text-align: center;
+}
+
+.user-profile {
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.user-profile span.username {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.user-profile span.name {
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.subscribe-button {
+  box-sizing: border-box;
+  min-width: 96px;
+  align-items: center;
+  position: relative;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  background-clip: padding-box;
+  font-size: 18px;
+  height: 36px;
+  padding-inline: 15px;
+  color: #fff;
+  background-color: rgba(254, 44, 85, 1);
+  border-color: rgba(254, 44, 85, 1);
+  min-width: 145px;
+}
+
+.subscribe-button:hover {
+  background-color: rgb(224, 36, 74);
+  border-color: rgb(224, 36, 74);
+  color: #fff;
+}
+
+.subscribed {
+  box-sizing: border-box;
+  min-width: 96px;
+  align-items: center;
+  position: relative;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  background-clip: padding-box;
+  font-size: 18px;
+  height: 36px;
+  padding-inline: 15px;
+  color: #161823;
+  background-color: #fff;
+  border-color: #e3e3e3;
+}
+
+.subscribed:hover {
+  border-color: #d3d3d3;
+  background-color: rgb(241, 241, 241);
+  color: #000;
+}
+
+.center-content-subs {
+  position: relative;
+  margin: 0px auto;
+  margin-top: 100px;
+  width: 100%;
+  min-width: 420px;
+  flex-shrink: 1;
+  display: flex;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.content-subs {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 20px 0px;
+  position: relative;
+  max-width: 450px;
+  height: unset;
+  width: unset;
+  transition-property: margin;
+  transition-duration: 0.3s;
+  margin-bottom: 0px;
+}
+
+.center-content-subs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 120%);
+  width: 100%;
+  text-align: center;
+}
+
+.center-content-subs h2 {
+  font-size: 25px;
 }

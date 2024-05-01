@@ -9,7 +9,7 @@ $name = $_POST['name'];
 $random_number = rand(1000, 9999);
 $username = 'user' . $random_number;
 $password = $_POST['password'];
-
+$_bio = 'Belum ada biodata';
 //default profile picture
 $profile_picture = 'uploads/profile_picture/profile_default.jpg';
 
@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 }
 
 // Siapkan dan jalankan query SQL untuk menyimpan data
-$sql = "INSERT INTO users (email, name, username, profile_picture, password, birthday) VALUES ('$email', '$name', '$username', '$profile_picture' ,'$password', '$birthday')";
+$sql = "INSERT INTO users (email, name, username, bio, profile_picture, password, birthday) VALUES ('$email', '$name', '$username', '$_bio,'$profile_picture' ,'$password', '$birthday')";
 
 if ($conn->query($sql) === TRUE) {
     $new_user_id = $conn->insert_id;

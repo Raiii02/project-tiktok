@@ -89,7 +89,7 @@ shuffle($rows);
   <title>TikTok</title>
   <link rel="stylesheet" href="src/style/style.css" />
   <link rel="stylesheet" href="style/css/responsive.css" />
-  <link rel="icon" type="image/png" href="photo/icontiktok.jpg" />
+  <link rel="icon" type="image/png" href="src/assets/photo/icontiktok.jpg" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 

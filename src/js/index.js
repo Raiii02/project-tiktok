@@ -180,12 +180,14 @@ function changeSVGColor(svgElement, color) {
 function checkURLForColorChange() {
   var currentURL = window.location.href;
 
-  // Mendapatkan elemen ikon dan teks "foryou"
   var foryouIcon = document.querySelector(".foryou svg");
   var foryouText = document.querySelector(".foryou span.namehiden");
 
   var jelajahiIcon = document.querySelector(".live svg");
   var jelajahiText = document.querySelector(".live span.namehiden");
+
+  var subcriptionsIcon = document.querySelector(".subcriptions svg");
+  var subcriptionsText = document.querySelector(".subcriptions span.namehiden");
 
   if (
     currentURL === "http://localhost/project-tiktok/index.php" ||
@@ -204,6 +206,14 @@ function checkURLForColorChange() {
   } else {
     changeSVGColor(jelajahiIcon, "rgba(22, 24, 35, 1)");
     jelajahiText.style.color = "rgba(22, 24, 35, 1.0)";
+  }
+
+  if (currentURL === "http://localhost/project-tiktok/subscriber.php") {
+    changeSVGColor(subcriptionsIcon, "rgba(254, 44, 85, 1)");
+    subcriptionsText.style.color = "rgba(254, 44, 85, 1.0)";
+  } else {
+    changeSVGColor(subcriptionsIcon, "rgba(22, 24, 35, 1)");
+    subcriptionsText.style.color = "rgba(22, 24, 35, 1.0)";
   }
 }
 
