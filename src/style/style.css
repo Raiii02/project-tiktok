@@ -3604,28 +3604,31 @@ input#file-upload-button {
   text-align: center;
 }
 
-.user-profile {
+.user-profile a {
   gap: 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-decoration: none;
 }
 
-.user-profile img {
+.user-profile a img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   margin-bottom: 10px;
 }
 
-.user-profile span.username {
+.user-profile a span.username {
   font-size: 18px;
   font-weight: 600;
+  color: #000;
 }
 
-.user-profile span.name {
+.user-profile a span.name {
   font-size: 15px;
   font-weight: normal;
+  color: #000;
 }
 
 .subscribe-button {
@@ -3710,15 +3713,20 @@ input#file-upload-button {
   margin-bottom: 0px;
 }
 
-.center-content-subs {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 120%);
-  width: 100%;
-  text-align: center;
+.content-subs-center {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+  max-width: 900px;
+  height: unset;
+  width: unset;
+  left: 100%;
+  transition-property: margin;
+  transition-duration: 0.3s;
+  margin-bottom: 0px;
 }
 
-.center-content-subs h2 {
+.content-subs-center h2 {
   font-size: 25px;
 }

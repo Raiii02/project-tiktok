@@ -32,6 +32,42 @@ if ($userResult && $userResult->num_rows > 0) {
   $videoStmt->execute();
   $videoResult = $videoStmt->get_result();
 
+  $sql_count_subscribed = "SELECT COUNT(*) AS total_subscribed FROM subscriptions WHERE user_id = $user_id";
+  $count_subscribed_result = $conn->query($sql_count_subscribed);
+
+  if ($count_subscribed_result) {
+    $total_subscribed = $count_subscribed_result->fetch_assoc()['total_subscribed'];
+  } else {
+    $total_subscribed = 0;
+  }
+
+  $subscribed_suffix = $total_subscribed > 1000000 ? 'M' : ($total_subscribed > 1000 ? 'K' : '');
+  $total_subscribed_formatted = $total_subscribed >= 1000 ? number_format($total_subscribed / 1000, 1) . $subscribed_suffix : $total_subscribed;
+
+  $sql_count_subscriber = "SELECT COUNT(*) AS total_subscriber FROM subscriptions WHERE subscriber_id = $user_id";
+  $count_subscriber_result = $conn->query($sql_count_subscriber);
+
+  if ($count_subscriber_result) {
+    $total_subscriber = $count_subscriber_result->fetch_assoc()['total_subscriber'];
+  } else {
+    $total_subscriber = 0;
+  }
+
+  $subscriber_suffix = $total_subscriber > 1000000 ? 'M' : ($total_subscriber > 1000 ? 'K' : '');
+  $total_subscriber_formatted = $total_subscriber >= 1000 ? number_format($total_subscriber / 1000, 1) . $subscriber_suffix : $total_subscriber;
+
+  $sql_count_likes = "SELECT COUNT(*) AS total_likes FROM likes WHERE user_id = $user_id";
+  $count_likes_result = $conn->query($sql_count_likes);
+
+  if ($count_likes_result) {
+    $total_likes = $count_likes_result->fetch_assoc()['total_likes'];
+  } else {
+    $total_likes = 0;
+  }
+
+  $like_suffix = $total_likes > 1000000 ? 'M' : ($total_likes > 1000 ? 'K' : '');
+  $total_likes_formatted = $total_likes >= 1000 ? number_format($total_likes / 1000, 1) . $like_suffix : $total_likes;
+
   if ($videoResult && $videoResult->num_rows > 0) {
     $rows = array();
     while ($row = $videoResult->fetch_assoc()) {
@@ -107,15 +143,15 @@ if ($userResult && $userResult->num_rows > 0) {
               </div>
               <div class="info-number">
                 <div class="number-profile">
-                  <h3>364</h3>
+                  <h3><?php echo $total_subscriber_formatted; ?></h3>
                   <p>Mengikuti</p>
                 </div>
                 <div class="number-profile">
-                  <h3>31.6M</h3>
+                  <h3><?php echo $total_subscribed_formatted; ?></h3>
                   <p>Pengikut</p>
                 </div>
                 <div class="number-profile">
-                  <h3>364.4M</h3>
+                  <h3><?php echo $total_likes_formatted; ?></h3>
                   <p>Suka</p>
                 </div>
               </div>

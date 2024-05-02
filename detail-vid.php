@@ -57,7 +57,7 @@ if (isset($_GET['video_id'])) {
         $months_diff = floor($time_diff / (60 * 60 * 24 * 30.44));
 
         if ($minutes_diff < 1) {
-            $formatted_comment_posted_at = "Baru saja";
+            $formatted_posted_at = "Baru saja";
         } elseif ($minutes_diff < 60) {
             $formatted_posted_at = "$minutes_diff menit yang lalu";
         } elseif ($hours_diff < 24) {
@@ -141,6 +141,8 @@ if (isset($_GET['video_id'])) {
     // Jika parameter video_id tidak disetel, set pesan kesalahan
     $error_message = "Parameter video_id tidak ditemukan.";
 }
+
+$isSubscribed = false;
 
 if (isset($_SESSION['id'])) {
     $user_ids = $_SESSION['id'];
@@ -258,7 +260,7 @@ if (isset($_SESSION['id'])) {
                                             <div class="Avatar">
                                                 <img src="<?php echo $userData['profile_picture']; ?>" width="55px" alt="">
                                             </div>
-                                            <a href="profile.php" class="UserName">
+                                            <a href="profile.php?user_id=<?php echo $userData['id']; ?>" class="UserName">
                                                 <span id="nama"><?php echo $userData['username']; ?></span><br><span id="bio"><?php echo $userData['name']; ?> . <?php echo $formatted_posted_at; ?></span>
                                             </a>
                                             <button class="ButtonFollow <?php echo $isSubscribed ? 'subscribed' : ''; ?>" onclick="toggleSubscribe(this, <?php echo $user_id; ?>)">
@@ -428,6 +430,18 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
         </div>
+
+        <div id="modal-error-subs" class="modal">
+            <div class="modal-content-error">
+                <span class="close-error-subs">&times;</span>
+                <div id="error-message">
+                    <i class='fas fa-exclamation-circle'></i>
+                    <h1>Oppss!</h1>
+                    Please log in to subscribe.
+                </div>
+            </div>
+        </div>
+
     </content>
     <script src="src/js/detail-vid.js"></script>
     <script>
@@ -500,7 +514,7 @@ if (isset($_SESSION['id'])) {
             const data = `user_id=${userId}&is_subscribed=${isSubscribed}`;
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                        const responseData = JSON.parse(xhr.responseText);
+                    const responseData = JSON.parse(xhr.responseText);
                     if (isSubscribed) {
                         button.textContent = 'Unsubscribe';
                         button.classList.add('subscribed');

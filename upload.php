@@ -56,7 +56,7 @@ if (isset($_SESSION['id'])) {
                   <input type="hidden" id="videoPath" name="video_path">
                   <input type="hidden" name="hapus_video" value="1">
                   <label for="">Keterangan uploadVideo</label>
-                  <input type="text" id="videoTitle" name="description" placeholder="Judul Video">
+                  <input type="text" id="videoTitle" name="description" placeholder="Deskripsi Video">
                   <label for="">Sampul Video</label>
                   <input type="file" id="thumbnailFile" accept="image/*" placeholder="Unggah Thumbnail">
                   <label for="">Tambahkan Ke Playlist</label><br>

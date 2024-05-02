@@ -56,20 +56,22 @@ if (isset($_SESSION['id'])) {
                                     foreach ($rows as $index => $row) : ?>
                                         <div class="content-subs">
                                             <div class="user-profile">
-                                                <img src="<?php echo $row['profile_picture']; ?>" alt="Profile Photo">
-                                                <span class="username"><?php echo $row['username']; ?></span>
-                                                <span class="name"><?php echo $row['name']; ?></span>
-                                                <button class="subscribe-button <?php echo $row['isSubscribed'] ? 'subscribed' : ''; ?>" onclick="toggleSubscribe(this, <?php echo $row['user_id']; ?>)">
-                                                    <?php echo $row['isSubscribed'] ? "Unsubscribe" : "Subscribe"; ?>
-                                                </button>
+                                                <a href="profile.php?user_id=<?php echo $row['user_id'] ?>">
+                                                    <img src="<?php echo $row['profile_picture']; ?>" alt="Profile Photo">
+                                                    <span class="username"><?php echo $row['username']; ?></span>
+                                                    <span class="name"><?php echo $row['name']; ?></span>
+                                                    <button class="subscribe-button <?php echo $row['isSubscribed'] ? 'subscribed' : ''; ?>" onclick="toggleSubscribe(this, <?php echo $row['user_id']; ?>)">
+                                                        <?php echo $row['isSubscribed'] ? "Unsubscribe" : "Subscribe"; ?>
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
                                     <?php endforeach; ?>
                             <?php } else {
-                                    echo "<div class='center-content-subs'><h2>Belum ada pengguna yang Anda Subscribed</h2></div>";
+                                    echo "<div class='content-subs-center'><h2>Belum ada pengguna yang Anda Subscribed</h2></div>";
                                 }
                             } else {
-                                echo "<div class='center-content-subs'><h2>Silakan Login untuk melakukan Subscribe</h2></div>";
+                                echo "<div class='content-subs-center'><h2>Silakan Login untuk melakukan Subscribe</h2></div>";
                             }
                             ?>
                         </div>

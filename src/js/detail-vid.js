@@ -77,29 +77,31 @@ document.addEventListener("keydown", function (event) {
   const key = event.key;
   const videos = document.querySelectorAll(".content-vid video");
 
-  switch (key) {
-    case " ":
-      // Jika tombol spasi ditekan, hentikan pemutaran video
-      event.preventDefault(); // Menghentikan perilaku default dari spasi (scrolling)
-      for (var i = 0; i < videos.length; i++) {
-        var video = videos[i];
-        if (isInViewport(video)) {
-          if (video.paused) {
-            playVideo(video); // Memanggil fungsi playVideo
-          } else {
-            pauseVideo(video); // Memanggil fungsi pauseVideo
+  // Cek apakah elemen fokus saat ini bukanlah input teks
+  const activeElement = document.activeElement.tagName.toLowerCase();
+  if (activeElement !== "input" && activeElement !== "textarea") {
+    switch (key) {
+      case " ":
+        event.preventDefault(); // Menghentikan perilaku default dari spasi (scrolling)
+        for (var i = 0; i < videos.length; i++) {
+          var video = videos[i];
+          if (isInViewport(video)) {
+            if (video.paused) {
+              playVideo(video); // Memanggil fungsi playVideo
+            } else {
+              pauseVideo(video); // Memanggil fungsi pauseVideo
+            }
+            break;
           }
-          break;
         }
-      }
-      break;
-    case "m":
-    case "M":
-      // Jika tombol 'm' ditekan, atur video menjadi dimute
-      videos.forEach((video) => {
-        video.muted = !video.muted;
-      });
-      break;
+        break;
+      case "m":
+      case "M":
+        videos.forEach((video) => {
+          video.muted = !video.muted;
+        });
+        break;
+    }
   }
 });
 
